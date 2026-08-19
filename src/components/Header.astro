@@ -1,0 +1,248 @@
+---
+import headerLogo from '../assets/phoenicia-header-logo.png';
+
+interface Props {
+  active?: 'home' | 'about' | 'menu' | 'cooking-classes' | 'catering' | 'contact';
+}
+const { active } = Astro.props as Props;
+
+const links = [
+  { id: 'home', label: 'Home', href: '/home' },
+  { id: 'about', label: 'About', href: '/about' },
+  { id: 'menu', label: 'Menu', href: '/menu' },
+  { id: 'cooking-classes', label: 'Cooking Classes', href: '/cooking-classes' },
+  { id: 'catering', label: 'Catering', href: '/catering' },
+  { id: 'contact', label: 'Contact', href: '/contact' },
+];
+---
+
+<header class="site-header">
+  <div class="nav-row">
+    <a class="logo" href="/home" aria-label="Phoenicia Mediterranean Deli — home">
+      <img
+        src={headerLogo.src}
+        width={headerLogo.width}
+        height={headerLogo.height}
+        alt="Phoenicia Mediterranean Deli logo"
+        class="logo-mark"
+      />
+    </a>
+    <nav class="primary" id="primaryNav">
+      {links.map((l) => (
+        <a href={l.href} class={active === l.id ? 'active' : ''}>{l.label}</a>
+      ))}
+    </nav>
+    <div class="header-actions">
+      <a href="tel:3147649222" class="phone-link">
+        <svg viewBox="0 0 24 24"><use href="#icon-phone" /></svg>
+        (314) 764-9222
+      </a>
+      <button type="button" class="header-order-btn" data-order-placeholder>Order Now</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" id="navToggleIcon"><use href="#icon-menu" /></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--sand);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 28px;
+    gap: 20px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .logo-mark {
+    height: 64px;
+    width: auto;
+    flex: none;
+    object-fit: contain;
+  }
+
+  nav.primary {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+  }
+
+  nav.primary a {
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--ink);
+    position: relative;
+    padding: 4px 0;
+  }
+
+  nav.primary a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    background: var(--clay);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+
+  nav.primary a:hover::after,
+  nav.primary a.active::after {
+    transform: scaleX(1);
+  }
+
+  nav.primary a.active {
+    color: var(--clay);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .phone-link {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .phone-link svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    color: var(--clay);
+  }
+
+  .header-order-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 11px 26px;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(60, 10, 10, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .header-order-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
+  }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    color: var(--ink);
+  }
+
+  .nav-toggle svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  @media (max-width: 1140px) {
+    nav.primary {
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--sand);
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 28px;
+      gap: 24px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+      z-index: 99;
+    }
+    nav.primary.open {
+      transform: translateX(0);
+    }
+    nav.primary a {
+      font-size: 1.1rem;
+    }
+    .nav-toggle {
+      display: block;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .nav-row {
+      padding: 8px 18px;
+      gap: 10px;
+    }
+    .header-actions {
+      gap: 10px;
+    }
+    .phone-link {
+      display: none;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .header-order-btn {
+      padding: 9px 18px;
+      font-size: 0.76rem;
+    }
+  }
+</style>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const primaryNav = document.getElementById('primaryNav');
+  const navToggleIcon = document.getElementById('navToggleIcon');
+
+  navToggle?.addEventListener('click', () => {
+    const isOpen = primaryNav?.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(!!isOpen));
+    if (navToggleIcon) {
+      navToggleIcon.innerHTML = isOpen
+        ? '<use href="#icon-close"/>'
+        : '<use href="#icon-menu"/>';
+    }
+  });
+
+  primaryNav?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      primaryNav.classList.remove('open');
+      navToggle?.setAttribute('aria-expanded', 'false');
+      if (navToggleIcon) navToggleIcon.innerHTML = '<use href="#icon-menu"/>';
+    });
+  });
+</script>

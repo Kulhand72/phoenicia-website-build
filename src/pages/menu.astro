@@ -1,0 +1,236 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { MENU } from '../data/menu';
+---
+
+<Layout title="Menu" active="menu">
+  <section class="page-banner">
+    <div class="page-banner-inner">
+      <div class="eyebrow">
+        <svg class="mark" viewBox="0 0 100 100"><use href="#icon-sunmark" /></svg>
+        The Menu
+      </div>
+      <h1>Everything on the menu, in one place.</h1>
+      <p>
+        Items marked <span class="tag">V</span> are vegetarian. Call ahead or stop in to order
+        &mdash; online ordering is on its way.
+      </p>
+    </div>
+  </section>
+
+  <section style="padding-top: 44px;">
+    <div class="wrap">
+      <div class="menu-tabs" id="menuTabs" role="tablist">
+        {MENU.map((cat, i) => (
+          <button
+            type="button"
+            class={'menu-tab' + (i === 0 ? ' active' : '')}
+            data-target={cat.id}
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      <div id="menuPanels">
+        {MENU.map((cat, i) => (
+          <div class={'menu-panel' + (i === 0 ? ' active' : '')} id={'panel-' + cat.id} role="tabpanel">
+            <div class="menu-panel-head">
+              <h2>{cat.title}</h2>
+              {cat.note && <div class="menu-panel-note">{cat.note}</div>}
+            </div>
+            <div class="menu-grid">
+              {cat.items.map((item) => (
+                <div class="menu-item">
+                  <div class="menu-item-text">
+                    <div class="menu-item-name">
+                      {item.n}
+                      {item.tag && <span class="tag">{item.tag}</span>}
+                    </div>
+                    {item.d && <div class="menu-item-desc">{item.d}</div>}
+                  </div>
+                  <div class="menu-item-price">{item.p}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="menu-cta">
+        <p>Ready to order? Give us a call &mdash; pickup runs 20&ndash;30 minutes.</p>
+        <button type="button" class="btn btn-primary" data-order-placeholder>Start an Order</button>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .mark {
+    width: 15px;
+    height: 15px;
+    flex: none;
+  }
+
+  .page-banner .tag {
+    background: rgba(227, 168, 59, 0.22);
+    color: var(--saffron-soft);
+  }
+
+  .menu-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-bottom: 30px;
+  }
+
+  .menu-tab {
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1.5px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .menu-tab:hover {
+    border-color: var(--aegean);
+  }
+
+  .menu-tab.active {
+    background: var(--aegean);
+    border-color: var(--aegean);
+    color: var(--sand);
+  }
+
+  .menu-panel {
+    display: none;
+  }
+
+  .menu-panel.active {
+    display: block;
+  }
+
+  .menu-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 20px;
+    border-bottom: 2px solid var(--aegean);
+    padding-bottom: 12px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+
+  .menu-panel-head h2 {
+    font-size: 1.35rem;
+  }
+
+  .menu-panel-note {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 36px;
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .menu-item-text {
+    max-width: 70%;
+  }
+
+  .menu-item-name {
+    font-weight: 600;
+    font-size: 0.97rem;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+  }
+
+  .menu-item-desc {
+    font-size: 0.84rem;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  .menu-item-price {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.97rem;
+    white-space: nowrap;
+    color: var(--clay);
+  }
+
+  .menu-cta {
+    margin-top: 40px;
+    background: var(--sand-deep);
+    border-radius: var(--radius);
+    padding: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .menu-cta p {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    max-width: 32ch;
+  }
+
+  @media (max-width: 760px) {
+    .menu-grid {
+      grid-template-columns: 1fr;
+    }
+    .menu-item-text {
+      max-width: 100%;
+    }
+    .menu-cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.menu-tab');
+  const panels = document.querySelectorAll<HTMLDivElement>('.menu-panel');
+
+  function activate(id: string) {
+    tabs.forEach((t) => {
+      const isActive = t.dataset.target === id;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', String(isActive));
+    });
+    panels.forEach((p) => {
+      p.classList.toggle('active', p.id === 'panel-' + id);
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => activate(tab.dataset.target ?? ''));
+  });
+
+  const hashId = window.location.hash.replace('#', '');
+  if (hashId && document.getElementById('panel-' + hashId)) {
+    activate(hashId);
+  }
+</script>

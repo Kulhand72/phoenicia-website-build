@@ -1,0 +1,190 @@
+---
+import Layout from '../layouts/Layout.astro';
+import heroPhoto from '../assets/hero-coastline.jpg';
+import logoImg from '../assets/phoenicia-logo.png';
+---
+
+<Layout title="Home" active="home" fitViewport footer={false}>
+  <section class="hero">
+    <img
+      src={heroPhoto.src}
+      width={heroPhoto.width}
+      height={heroPhoto.height}
+      alt="A coastal Mediterranean spread of hummus, tabbouleh, grape leaves, falafel, and grilled skewers overlooking the sea"
+      class="hero-bg"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <img
+        src={logoImg.src}
+        width={logoImg.width}
+        height={logoImg.height}
+        alt="Phoenicia Mediterranean Deli — Authentic Lebanese &amp; Mediterranean Cuisine"
+        class="hero-logo-img"
+      />
+      <div class="order-wrap">
+        <span class="order-dot" aria-hidden="true"></span>
+        <button type="button" class="order-pill" data-order-placeholder>Order Now</button>
+        <span class="order-dot" aria-hidden="true"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="quick-facts">
+    <div class="wrap quick-facts-inner">
+      <div class="quick-address">
+        <svg viewBox="0 0 24 24"><use href="#icon-pin" /></svg>
+        <span class="value">15344 Manchester Rd, Ballwin, MO</span>
+        <a href="#" class="directions-link">Click here for directions</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 58%;
+    z-index: 0;
+  }
+
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(ellipse 62% 55% at 50% 32%, rgba(255, 252, 246, 0.4) 0%, rgba(255, 252, 246, 0) 62%),
+      linear-gradient(180deg, rgba(20, 14, 8, 0.06) 0%, rgba(20, 14, 8, 0.05) 55%, rgba(20, 14, 8, 0.38) 100%);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: none;
+    margin: 0 auto;
+    padding: clamp(10px, 2.5vh, 28px) 24px 40px;
+  }
+
+  .hero-logo-img {
+    width: clamp(280px, 61vw, 960px);
+    height: auto;
+    filter: drop-shadow(0 8px 22px rgba(20, 10, 6, 0.32));
+  }
+
+  .order-wrap {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: clamp(12px, 2vh, 20px);
+  }
+
+  .order-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--maroon);
+    transform: rotate(45deg);
+    opacity: 0.85;
+    flex: none;
+  }
+
+  .order-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 0.92rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 16px 42px;
+    cursor: pointer;
+    box-shadow: 0 12px 26px rgba(60, 10, 10, 0.38);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .order-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(60, 10, 10, 0.46);
+  }
+
+  .quick-facts {
+    background: var(--maroon-deep);
+    color: var(--sand);
+    padding: 26px 0;
+    flex: none;
+  }
+
+  .quick-facts-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px 20px;
+    text-align: center;
+  }
+
+  .quick-address {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .quick-address svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    color: var(--saffron-soft);
+  }
+
+  .quick-address .value {
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .directions-link {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--saffron-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .directions-link:hover {
+    color: var(--sand);
+  }
+
+  @media (max-width: 760px) {
+    .hero-inner {
+      padding-top: clamp(10px, 3vh, 28px);
+    }
+    .order-pill {
+      padding: 14px 34px;
+    }
+  }
+</style>

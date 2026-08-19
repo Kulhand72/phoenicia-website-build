@@ -1,0 +1,294 @@
+/* ============================================================
+   Phoenicia Mediterranean Deli — Design Tokens & Base Styles
+   Warm coastal-Mediterranean palette: terracotta clay, Aegean
+   teal, saffron gold, sun-bleached sand. Deliberately not the
+   red/white/green flag triad.
+   ============================================================ */
+
+:root {
+  /* Palette */
+  --sand: #F7EEDD;
+  --sand-deep: #EFE1C6;
+  --paper: #FFFCF6;
+  --clay: #C1592B;
+  --clay-deep: #9A431E;
+  --aegean: #1F5C63;
+  --aegean-deep: #123B40;
+  --saffron: #E3A83B;
+  --saffron-soft: #F0C878;
+  --maroon: #8C1418;
+  --maroon-deep: #4B0F12;
+  --ink: #2B2118;
+  --ink-soft: #6B5D4C;
+  --line: rgba(43, 33, 24, 0.14);
+  --line-on-dark: rgba(247, 238, 221, 0.18);
+
+  /* Type */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Layout */
+  --max: 1180px;
+  --radius: 6px;
+  --radius-sm: 3px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--sand);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+:focus-visible {
+  outline: 2.5px solid var(--clay);
+  outline-offset: 3px;
+}
+
+.wrap {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clay);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrow .mark {
+  width: 10px;
+  height: 10px;
+  flex: none;
+  color: var(--saffron);
+}
+
+.center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  padding: 13px 26px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--font-body);
+  transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: var(--clay);
+  color: var(--paper);
+}
+
+.btn-primary:hover {
+  background: var(--clay-deep);
+}
+
+.btn-gold {
+  background: var(--saffron);
+  color: var(--aegean-deep);
+}
+
+.btn-gold:hover {
+  background: var(--saffron-soft);
+}
+
+.btn-outline-light {
+  border-color: rgba(247, 238, 221, 0.55);
+  color: var(--sand);
+  background: transparent;
+}
+
+.btn-outline-light:hover {
+  background: var(--sand);
+  color: var(--aegean-deep);
+  border-color: var(--sand);
+}
+
+.btn-outline {
+  border-color: rgba(43, 33, 24, 0.3);
+  color: var(--ink);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  border-color: var(--clay);
+  color: var(--clay);
+}
+
+/* Section rhythm */
+section {
+  padding: 64px 0;
+}
+
+.section-head {
+  max-width: 640px;
+  margin-bottom: 40px;
+}
+
+.section-head h2 {
+  font-size: clamp(1.8rem, 3.2vw, 2.3rem);
+  margin-top: 14px;
+}
+
+/* Tags */
+.tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(31, 92, 99, 0.12);
+  color: var(--aegean);
+}
+
+/* Cards */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+/* Page banner (interior page hero) */
+.page-banner {
+  position: relative;
+  background: var(--aegean-deep);
+  color: var(--sand);
+  overflow: hidden;
+  padding: 56px 0 44px;
+}
+
+.page-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 15% 25%, rgba(227, 168, 59, 0.16) 0%, transparent 55%),
+    radial-gradient(circle at 85% 75%, rgba(193, 89, 43, 0.18) 0%, transparent 55%);
+}
+
+.page-banner-inner {
+  position: relative;
+  z-index: 2;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.page-banner .eyebrow {
+  color: var(--saffron-soft);
+}
+
+.page-banner h1 {
+  font-size: clamp(2rem, 4.2vw, 3rem);
+  margin-top: 12px;
+}
+
+.page-banner p {
+  margin-top: 12px;
+  color: rgba(247, 238, 221, 0.82);
+  max-width: 56ch;
+  font-size: 1rem;
+}
+
+/* Placeholder media blocks */
+.media-placeholder {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1.5px dashed rgba(247, 238, 221, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--aegean), var(--aegean-deep));
+}
+
+.media-placeholder span {
+  color: rgba(247, 238, 221, 0.65);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0 20px;
+}
+
+/* Toast (Order Now placeholder feedback) */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translate(-50%, 16px);
+  background: var(--aegean-deep);
+  color: var(--sand);
+  padding: 14px 22px;
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  font-weight: 600;
+  max-width: min(92vw, 420px);
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(18, 59, 64, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 500;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (max-width: 980px) {
+  section {
+    padding: 48px 0;
+  }
+}

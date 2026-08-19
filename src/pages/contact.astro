@@ -1,0 +1,353 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
+---
+
+<Layout title="Contact" active="contact">
+  <section class="page-banner">
+    <div class="page-banner-inner">
+      <div class="eyebrow">
+        <svg class="mark" viewBox="0 0 100 100"><use href="#icon-sunmark" /></svg>
+        Visit or Call
+      </div>
+      <h1>Find us in Ballwin.</h1>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap contact-grid">
+      <div class="contact-card card">
+        <div class="contact-row">
+          <svg viewBox="0 0 24 24"><use href="#icon-pin" /></svg>
+          <div>
+            <div class="label">Address</div>
+            <a
+              class="value"
+              href="https://www.google.com/maps/search/?api=1&query=Phoenicia+Mediterranean+Deli+15344+Manchester+Rd+Ballwin+MO"
+              target="_blank"
+              rel="noopener"
+            >15344 Manchester Rd, Ballwin, MO 63011</a>
+          </div>
+        </div>
+        <div class="contact-row">
+          <svg viewBox="0 0 24 24"><use href="#icon-phone" /></svg>
+          <div>
+            <div class="label">Phone</div>
+            <a class="value" href="tel:3147649222">(314) 764-9222</a>
+          </div>
+        </div>
+        <div class="contact-row">
+          <svg viewBox="0 0 24 24"><use href="#icon-clock" /></svg>
+          <div>
+            <div class="label">Hours</div>
+            <div class="value">Daily, 11:00 AM &ndash; 9:00 PM</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <svg viewBox="0 0 24 24"><use href="#icon-tray" /></svg>
+          <div>
+            <div class="label">Order</div>
+            <div class="value">Online ordering coming soon &mdash; call to order for now</div>
+          </div>
+        </div>
+        <div class="social-row">
+          <a
+            class="social-btn"
+            href="https://www.instagram.com/phoeniciamediterranean/?hl=en"
+            target="_blank"
+            rel="noopener"
+            aria-label="Instagram"
+          ><svg viewBox="0 0 24 24"><use href="#icon-instagram" /></svg></a>
+          <a
+            class="social-btn"
+            href="https://www.facebook.com/pages/category/Mediterranean-Restaurant/Phoenicia-Mediterranean-Deli-401178850234762/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Facebook"
+          ><svg viewBox="0 0 24 24"><use href="#icon-facebook" /></svg></a>
+        </div>
+      </div>
+
+      <div class="map-frame card">
+        <iframe
+          src="https://maps.google.com/maps?q=Phoenicia%20Mediterranean%20Deli%2015344%20Manchester%20Rd%20Ballwin%20MO&t=&z=13&ie=UTF8&iwloc=&output=embed"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Map showing Phoenicia Mediterranean Deli location"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="class-section">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">
+          <svg class="mark" viewBox="0 0 100 100"><use href="#icon-sunmark" /></svg>
+          Cooking Classes
+        </div>
+        <h2>Ask about our next Mediterranean cooking class.</h2>
+        <p class="section-sub">
+          Hands-on classes are $55 per person and booked by request. Send the details below and
+          we&rsquo;ll follow up to confirm a date &mdash; this replaces our old sign-up form.
+        </p>
+      </div>
+
+      <form class="class-form card" id="classForm" novalidate>
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required autocomplete="name" />
+        </div>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email" />
+        </div>
+        <div class="form-row">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" />
+        </div>
+        <div class="form-row two-up">
+          <div>
+            <label for="date">Preferred Date</label>
+            <input type="date" id="date" name="date" />
+          </div>
+          <div>
+            <label for="partySize">Party Size</label>
+            <input type="number" id="partySize" name="partySize" min="1" max="30" placeholder="e.g. 4" />
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="message">What would you like to learn or celebrate?</label>
+          <textarea id="message" name="message" rows="4" placeholder="Tell us about the group and what you're hoping to cook..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Inquiry</button>
+        <p class="form-note">
+          Sending this opens your email app with the details filled in, addressed to Phoenicia.
+        </p>
+      </form>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .mark {
+    width: 15px;
+    height: 15px;
+    flex: none;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .contact-card {
+    padding: 30px;
+  }
+
+  .contact-row {
+    display: flex;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .contact-row:last-of-type {
+    border-bottom: none;
+  }
+
+  .contact-row svg {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    color: var(--clay);
+    margin-top: 2px;
+  }
+
+  .contact-row .label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .contact-row .value {
+    font-size: 0.98rem;
+    font-weight: 600;
+  }
+
+  .contact-row a.value {
+    text-decoration: none;
+  }
+
+  .contact-row a.value:hover {
+    color: var(--clay);
+  }
+
+  .social-row {
+    display: flex;
+    gap: 13px;
+    margin-top: 22px;
+  }
+
+  .social-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--aegean);
+    color: var(--sand);
+    transition: background 0.2s ease;
+  }
+
+  .social-btn:hover {
+    background: var(--clay);
+  }
+
+  .social-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .map-frame {
+    overflow: hidden;
+    height: 100%;
+    min-height: 300px;
+  }
+
+  .map-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  .class-section {
+    background: var(--sand-deep);
+  }
+
+  .section-sub {
+    margin-top: 10px;
+    color: var(--ink-soft);
+    max-width: 60ch;
+  }
+
+  .class-form {
+    max-width: 620px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-row.two-up {
+    flex-direction: row;
+    gap: 18px;
+  }
+
+  .form-row.two-up > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  input,
+  textarea {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    padding: 11px 13px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: 2.5px solid var(--clay);
+    outline-offset: 1px;
+    border-color: var(--clay);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .class-form .btn {
+    align-self: flex-start;
+  }
+
+  .form-note {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 980px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .form-row.two-up {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<script define:vars={{ INQUIRY_EMAIL }}>
+  const form = document.getElementById('classForm');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+
+    const name = (data.get('name') || '').toString().trim();
+    const email = (data.get('email') || '').toString().trim();
+    const phone = (data.get('phone') || '').toString().trim();
+    const date = (data.get('date') || '').toString().trim();
+    const partySize = (data.get('partySize') || '').toString().trim();
+    const message = (data.get('message') || '').toString().trim();
+
+    if (!name || !email) {
+      form.reportValidity();
+      return;
+    }
+
+    const bodyLines = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      phone && `Phone: ${phone}`,
+      date && `Preferred date: ${date}`,
+      partySize && `Party size: ${partySize}`,
+      '',
+      'Details:',
+      message || '(none provided)',
+    ].filter(Boolean);
+
+    const subject = encodeURIComponent(`Cooking Class Inquiry — ${name}`);
+    const body = encodeURIComponent(bodyLines.join('\n'));
+
+    window.location.href = `mailto:${INQUIRY_EMAIL}?subject=${subject}&body=${body}`;
+  });
+</script>

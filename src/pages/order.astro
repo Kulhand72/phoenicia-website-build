@@ -1,0 +1,346 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const TIME_SLOTS = [
+  '7:00 PM', '7:15 PM', '7:30 PM',
+  '7:45 PM', '8:00 PM', '8:15 PM',
+  '8:30 PM', '8:45 PM',
+];
+---
+
+<Layout title="Start Your Order" description="Preview the Phoenicia ordering flow — choose pickup or delivery and a time, then browse the menu.">
+  <section class="page-banner">
+    <div class="page-banner-inner">
+      <div class="eyebrow">
+        <svg class="mark" viewBox="0 0 100 100"><use href="#icon-sunmark" /></svg>
+        Order Online
+      </div>
+      <h1>How would you like to order?</h1>
+      <p>
+        This is a visual preview of the ordering flow &mdash; nothing is submitted yet. Real
+        online ordering is on its way; call (314) 764-9222 to order for now.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="service-grid">
+        <button type="button" class="service-card" data-service="pickup">
+          <svg viewBox="0 0 24 24"><use href="#icon-tray" /></svg>
+          <h3>Order for Pickup</h3>
+          <p class="service-sub">Ready in 20&ndash;30 min</p>
+          <div class="service-time" data-role="time-label">Choose a time &rarr;</div>
+        </button>
+        <button type="button" class="service-card" data-service="delivery">
+          <svg viewBox="0 0 24 24"><use href="#icon-scooter" /></svg>
+          <h3>Order for Delivery</h3>
+          <p class="service-sub">Arrives in 30&ndash;40 min</p>
+          <div class="service-time" data-role="time-label">Choose a time &rarr;</div>
+        </button>
+      </div>
+
+      <div class="start-order-wrap">
+        <a href="/menu" class="btn-pill-lg">Start Your Order</a>
+        <p class="start-order-note">Browse the full menu next &mdash; cart &amp; checkout are coming in a future step.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="time-modal" id="timeModal" aria-hidden="true">
+    <div class="time-modal-backdrop" data-close></div>
+    <div class="time-modal-panel" role="dialog" aria-modal="true" aria-labelledby="timeModalTitle">
+      <button type="button" class="time-modal-close" data-close aria-label="Close">
+        <svg viewBox="0 0 24 24"><use href="#icon-close" /></svg>
+      </button>
+      <h3 id="timeModalTitle">Choose a pickup time</h3>
+      <div class="time-grid" id="timeGrid">
+        <button type="button" class="time-slot active" data-time="ASAP">ASAP</button>
+        {TIME_SLOTS.map((t) => (
+          <button type="button" class="time-slot" data-time={t}>{t}</button>
+        ))}
+      </div>
+      <button type="button" class="btn-pill-lg time-confirm-btn" id="confirmTimeBtn">Confirm</button>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .mark {
+    width: 15px;
+    height: 15px;
+    flex: none;
+  }
+
+  .service-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .service-card {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    text-align: left;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  }
+
+  .service-card:hover {
+    border-color: var(--maroon);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(43, 33, 24, 0.08);
+  }
+
+  .service-card svg {
+    width: 30px;
+    height: 30px;
+    color: var(--maroon);
+  }
+
+  .service-card h3 {
+    font-size: 1.25rem;
+    margin-top: 4px;
+  }
+
+  .service-sub {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  .service-time {
+    margin-top: 10px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--aegean);
+  }
+
+  .service-card.selected {
+    border-color: var(--maroon);
+    background: rgba(140, 20, 24, 0.04);
+  }
+
+  .service-card.selected .service-time {
+    color: var(--maroon);
+  }
+
+  .start-order-wrap {
+    text-align: center;
+    margin-top: 56px;
+  }
+
+  .btn-pill-lg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 1.02rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 20px 56px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 14px 30px rgba(60, 10, 10, 0.32);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn-pill-lg:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(60, 10, 10, 0.4);
+  }
+
+  .start-order-note {
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+
+  .time-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+
+  .time-modal.open {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .time-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 14, 8, 0.55);
+  }
+
+  .time-modal-panel {
+    position: relative;
+    background: var(--paper);
+    border-radius: var(--radius);
+    padding: 32px;
+    max-width: 460px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    transform: translateY(12px);
+    transition: transform 0.2s ease;
+  }
+
+  .time-modal.open .time-modal-panel {
+    transform: translateY(0);
+  }
+
+  .time-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-soft);
+    padding: 4px;
+  }
+
+  .time-modal-close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .time-modal-panel h3 {
+    font-size: 1.3rem;
+    margin-bottom: 22px;
+    padding-right: 30px;
+  }
+
+  .time-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 26px;
+  }
+
+  .time-slot {
+    padding: 13px 8px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--line);
+    background: var(--sand);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .time-slot:hover {
+    border-color: var(--maroon);
+  }
+
+  .time-slot.active {
+    background: var(--maroon);
+    border-color: var(--maroon);
+    color: #fbeee9;
+  }
+
+  .time-slot[data-time='ASAP'] {
+    grid-column: 1 / -1;
+    font-weight: 700;
+  }
+
+  .time-confirm-btn {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 700px) {
+    .service-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .btn-pill-lg {
+      padding: 17px 40px;
+      font-size: 0.92rem;
+    }
+    .time-modal-panel {
+      padding: 24px 20px;
+    }
+  }
+</style>
+
+<script>
+  const modal = document.getElementById('timeModal');
+  const modalTitle = document.getElementById('timeModalTitle');
+  const timeGrid = document.getElementById('timeGrid');
+  const confirmBtn = document.getElementById('confirmTimeBtn');
+  let activeCard: HTMLElement | null = null;
+
+  function openModal(card: HTMLElement) {
+    activeCard = card;
+    const service = card.dataset.service === 'delivery' ? 'delivery' : 'pickup';
+    if (modalTitle) modalTitle.textContent = `Choose a ${service} time`;
+    timeGrid?.querySelectorAll('.time-slot').forEach((s) => {
+      s.classList.toggle('active', (s as HTMLElement).dataset.time === 'ASAP');
+    });
+    modal?.classList.add('open');
+    modal?.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeModal() {
+    modal?.classList.remove('open');
+    modal?.setAttribute('aria-hidden', 'true');
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.service-card').forEach((card) => {
+    card.addEventListener('click', () => openModal(card));
+  });
+
+  timeGrid?.querySelectorAll<HTMLButtonElement>('.time-slot').forEach((slot) => {
+    slot.addEventListener('click', () => {
+      timeGrid.querySelectorAll('.time-slot').forEach((s) => s.classList.remove('active'));
+      slot.classList.add('active');
+    });
+  });
+
+  modal?.querySelectorAll('[data-close]').forEach((el) => {
+    el.addEventListener('click', closeModal);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  confirmBtn?.addEventListener('click', () => {
+    if (!activeCard) return;
+    const selected = timeGrid?.querySelector<HTMLElement>('.time-slot.active');
+    const label = selected?.dataset.time ?? 'ASAP';
+    const niceService = activeCard.dataset.service === 'delivery' ? 'Delivery' : 'Pickup';
+    const timeLabelEl = activeCard.querySelector('[data-role="time-label"]');
+    if (timeLabelEl) timeLabelEl.textContent = `${niceService} • ${label} ✓`;
+    activeCard.classList.add('selected');
+    closeModal();
+  });
+</script>
