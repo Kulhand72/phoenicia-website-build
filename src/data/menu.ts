@@ -11,6 +11,7 @@ export interface MenuCategory {
   title: string;
   note?: string;
   items: MenuItem[];
+  highlight?: boolean;
 }
 
 export const MENU: MenuCategory[] = [
@@ -179,6 +180,16 @@ export const MENU: MenuCategory[] = [
       { n: 'Soda Bottle', p: '$2.49' },
       { n: 'Ayran Yogurt', p: '$3.49' },
       { n: 'Iced Tea', p: '$2.99' },
+    ],
+  },
+  {
+    id: 'smoothies',
+    label: 'Smoothie Menu',
+    title: 'Smoothie Menu',
+    highlight: true,
+    items: [
+      { n: 'Strawberry Smoothie', d: 'Strawberry, banana, and milk with kashta, honey, and almond.', p: '$6.99' },
+      { n: 'Avocado Smoothie', d: 'Avocado, banana, and milk with kashta, honey, and almond.', p: '$6.99' },
     ],
   },
   {
