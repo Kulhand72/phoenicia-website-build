@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Class Inquiry" active="cooking-classes">
+  <section class="page-banner">
+    <div class="page-banner-inner">
+      <div class="eyebrow">
+        <svg class="mark" viewBox="0 0 100 100"><use href="#icon-sunmark" /></svg>
+        Cooking Classes
+      </div>
+      <h1>Request info about our classes.</h1>
+      <p>
+        This is a visual preview &mdash; our online inquiry form is coming soon. In the meantime,
+        call us to ask about availability and reserve your spot.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap center" style="max-width: 520px;">
+      <p class="body-copy">
+        Hands-on Mediterranean cooking classes are $55 per person, booked by request. Give us a
+        call and we&rsquo;ll help you find a date that works.
+      </p>
+      <a href="tel:3147649222" class="btn btn-primary" style="margin-top: 24px;">Call (314) 764-9222</a>
+      <p class="back-link">
+        <a href="/cooking-classes">&larr; Back to Cooking Classes</a>
+      </p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .mark {
+    width: 15px;
+    height: 15px;
+    flex: none;
+  }
+
+  .body-copy {
+    font-size: 1rem;
+    color: var(--ink-soft);
+  }
+
+  .back-link {
+    margin-top: 22px;
+  }
+
+  .back-link a {
+    font-weight: 600;
+    color: var(--clay);
+    text-decoration: none;
+  }
+
+  .back-link a:hover {
+    text-decoration: underline;
+  }
+</style>

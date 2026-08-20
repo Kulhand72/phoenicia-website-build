@@ -18,14 +18,16 @@
   --saffron-soft: #F0C878;
   --maroon: #8C1418;
   --maroon-deep: #4B0F12;
+  --olive: #5E6E37;
   --ink: #2B2118;
   --ink-soft: #6B5D4C;
   --line: rgba(43, 33, 24, 0.14);
   --line-on-dark: rgba(247, 238, 221, 0.18);
 
   /* Type */
-  --font-display: 'Playfair Display', Georgia, serif;
+  --font-display: 'GFS Didot', Georgia, serif;
   --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'GFS Neohellenic', Georgia, serif;
 
   /* Layout */
   --max: 1180px;
@@ -60,6 +62,10 @@ img {
 
 a {
   color: inherit;
+}
+
+p {
+  font-family: var(--font-serif);
 }
 
 h1, h2, h3, h4 {

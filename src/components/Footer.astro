@@ -4,19 +4,16 @@ const year = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="wrap footer-inner">
-    <div class="footer-logo">
-      <svg viewBox="0 0 100 100"><use href="#icon-sunmark" /></svg>
-      Phoenicia Mediterranean Deli
-    </div>
-    <a
-      class="footer-address"
-      href="https://www.google.com/maps/search/?api=1&query=Phoenicia+Mediterranean+Deli+15344+Manchester+Rd+Ballwin+MO"
-      target="_blank"
-      rel="noopener"
-    >
+    <div class="quick-address">
       <svg viewBox="0 0 24 24"><use href="#icon-pin" /></svg>
-      15344 Manchester Rd, Ballwin, MO 63011
-    </a>
+      <span class="value">15344 Manchester Rd, Ballwin, MO</span>
+      <a
+        class="directions-link"
+        href="https://www.google.com/maps/search/?api=1&query=Phoenicia+Mediterranean+Deli+15344+Manchester+Rd+Ballwin+MO"
+        target="_blank"
+        rel="noopener"
+      >Click here for directions</a>
+    </div>
     <span class="footer-copy">&copy; {year} Phoenicia Mediterranean Deli</span>
   </div>
 </footer>
@@ -28,58 +25,69 @@ const year = new Date().getFullYear();
     right: 0;
     bottom: 0;
     z-index: 150;
-    background: var(--aegean-deep);
-    color: rgba(247, 238, 221, 0.7);
-    padding: 14px 0;
+    background: var(--olive);
+    color: var(--sand);
+    padding: 26px 0;
     box-shadow: 0 -8px 20px rgba(18, 14, 8, 0.18);
   }
 
   .footer-inner {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 8px 20px;
   }
 
-  .footer-logo {
-    font-family: var(--font-display);
-    color: var(--sand);
-    font-size: 0.95rem;
+  .quick-address {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .quick-address svg {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    color: var(--saffron-soft);
+  }
+
+  .quick-address .value {
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .directions-link {
+    font-size: 0.85rem;
     font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .footer-logo svg {
-    width: 16px;
-    height: 16px;
     color: var(--saffron-soft);
-    flex: none;
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
-  .footer-address {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.8rem;
-    text-decoration: none;
-    color: rgba(247, 238, 221, 0.7);
-  }
-
-  .footer-address svg {
-    width: 13px;
-    height: 13px;
-    color: var(--saffron-soft);
-    flex: none;
-  }
-
-  .footer-address:hover {
-    color: var(--saffron-soft);
+  .directions-link:hover {
+    color: var(--sand);
   }
 
   .footer-copy {
-    font-size: 0.72rem;
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: rgba(247, 238, 221, 0.6);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 900px) {
+    .footer-copy {
+      position: static;
+      transform: none;
+      margin-top: 8px;
+      text-align: center;
+      width: 100%;
+    }
   }
 </style>

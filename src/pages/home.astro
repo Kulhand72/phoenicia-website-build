@@ -2,6 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import heroPhoto from '../assets/hero-coastline.jpg';
 import logoImg from '../assets/phoenicia-logo.png';
+
+const year = new Date().getFullYear();
 ---
 
 <Layout title="Home" active="home" fitViewport footer={false}>
@@ -39,6 +41,7 @@ import logoImg from '../assets/phoenicia-logo.png';
         <span class="value">15344 Manchester Rd, Ballwin, MO</span>
         <a href="#" class="directions-link">Click here for directions</a>
       </div>
+      <span class="quick-copy">&copy; {year} Phoenicia Mediterranean Deli</span>
     </div>
   </section>
 </Layout>
@@ -132,7 +135,8 @@ import logoImg from '../assets/phoenicia-logo.png';
   }
 
   .quick-facts {
-    background: var(--maroon-deep);
+    position: relative;
+    background: var(--olive);
     color: var(--sand);
     padding: 26px 0;
     flex: none;
@@ -145,6 +149,27 @@ import logoImg from '../assets/phoenicia-logo.png';
     flex-wrap: wrap;
     gap: 14px 20px;
     text-align: center;
+  }
+
+  .quick-copy {
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: rgba(247, 238, 221, 0.6);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 900px) {
+    .quick-copy {
+      position: static;
+      transform: none;
+      margin-top: 4px;
+      text-align: center;
+      width: 100%;
+    }
   }
 
   .quick-address {

@@ -1,43 +1,128 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import cookingBg from '../assets/cooking-classes-bg.jpg';
 ---
 
-<Layout title="Cooking Classes" active="cooking-classes">
-  <section class="page-banner">
-    <div class="page-banner-inner">
-      <div class="eyebrow">
-        <svg class="mark" viewBox="0 0 100 100"><use href="#icon-sunmark" /></svg>
-        Cooking Classes
-      </div>
-      <h1>Hands-on Mediterranean cooking classes.</h1>
-      <p>
-        This page is on its way &mdash; full class details, dates, and a booking form are coming
-        soon. In the meantime, call us to ask about availability.
+<Layout title="Cooking Classes" active="cooking-classes" fitViewport>
+  <section class="cooking-hero">
+    <img
+      src={cookingBg.src}
+      width={cookingBg.width}
+      height={cookingBg.height}
+      alt="Spice jars, olive oil, and fresh pizza dough laid out on a wooden table in front of a wood-fired oven"
+      class="cooking-hero-bg"
+      loading="eager"
+      fetchpriority="high"
+    />
+    <div class="cooking-hero-inner">
+      <h1>Hands-on cooking classes.</h1>
+      <p class="description">
+        Join us at Phoenicia for a hands-on culinary experience that goes beyond delicious food.
+        Our Cooking Classes offer more than just recipes &mdash; they open the door to a healthier
+        lifestyle and the joy of creating healthy and delicious dishes that we prepare here at
+        Phoenicia Mediterranean Deli. We will go over one or two items per session, and you can
+        create a home version of our delicious and healthy cuisine. When you inquire below, tell
+        us what you are looking to learn and let us help you on your journey. Thank you!
       </p>
-    </div>
-  </section>
 
-  <section>
-    <div class="wrap center" style="max-width: 560px;">
-      <p class="body-copy">
-        Phoenicia offers hands-on Mediterranean cooking classes, $55 per person, by request. We're
-        still building out this page &mdash; check back soon for the full schedule and an online
-        inquiry form.
-      </p>
-      <a href="tel:3147649222" class="btn btn-primary" style="margin-top: 24px;">Call to Ask About Classes</a>
+      <a href="/cooking-classes/inquire" class="inquire-btn">Inquire Now</a>
     </div>
   </section>
 </Layout>
 
 <style>
-  .mark {
-    width: 15px;
-    height: 15px;
-    flex: none;
+  .cooking-hero {
+    position: relative;
+    overflow: hidden;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
   }
 
-  .body-copy {
-    font-size: 1rem;
-    color: var(--ink-soft);
+  .cooking-hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 38%;
+    z-index: 0;
+  }
+
+  .cooking-hero-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8), 0 1px 3px rgba(0,0,0,0.9);
+    background-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 45%, rgba(0, 0, 0, 0) 75%) !important;
+    box-shadow: none !important;
+    padding: 2.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  @media (max-width: 900px) {
+    .cooking-hero-inner {
+      padding-top: 50px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cooking-hero-inner {
+      padding-top: 30px;
+    }
+  }
+
+  .cooking-hero-inner h1 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+    white-space: nowrap;
+    font-size: clamp(1.1rem, 4.9vw, 4.2rem);
+    color: var(--sand);
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.92), 0 6px 22px rgba(0, 0, 0, 0.75);
+    margin-bottom: 63px;
+  }
+
+  .description {
+    font-size: 1.7rem !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+    color: #ffffff !important;
+    max-width: 1150px !important;
+    width: 90% !important;
+    margin: 0 auto 2rem auto !important;
+    color: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+  }
+
+  .inquire-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: clamp(16px, 2.4vh, 22px) clamp(40px, 5.5vw, 58px);
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 12px 26px rgba(60, 10, 10, 0.38);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .inquire-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(60, 10, 10, 0.46);
   }
 </style>
