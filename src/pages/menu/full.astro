@@ -61,9 +61,29 @@ import { MENU } from '../../data/menu';
         ))}
       </div>
 
+      <div class="menu-divider menu-divider--inline" aria-hidden="true">
+        <span class="menu-divider-line"></span>
+        <svg class="menu-divider-mark" viewBox="0 0 32 24">
+          <circle cx="4" cy="12" r="2.5" fill="currentColor" />
+          <path d="M16 2 L22 12 L16 22 L10 12 Z" fill="currentColor" />
+          <circle cx="28" cy="12" r="2.5" fill="currentColor" />
+        </svg>
+        <span class="menu-divider-line"></span>
+      </div>
+
       <div class="menu-cta">
-        <p>Ready to order? Give us a call &mdash; pickup runs 20&ndash;30 minutes.</p>
-        <button type="button" class="btn btn-primary" data-order-placeholder>Start an Order</button>
+        <div class="menu-cta-text">
+          <p class="menu-cta-heading">Ready to start an order?</p>
+          <p class="menu-cta-line">
+            Give us a call
+            <a href="tel:3147649222" class="menu-cta-phone" aria-label="Call (314) 764-9222">
+              <svg viewBox="0 0 24 24"><use href="#icon-phone" /></svg>
+            </a>
+            or click the &ldquo;Start an Order&rdquo; button.
+          </p>
+          <p class="menu-cta-note">Pickup runs 20&ndash;30 minutes.</p>
+        </div>
+        <button type="button" class="menu-cta-btn" data-order-placeholder>Start an Order</button>
       </div>
     </div>
   </section>
@@ -143,6 +163,11 @@ import { MENU } from '../../data/menu';
     margin: 0 4px;
   }
 
+  .menu-divider--inline {
+    padding: 0;
+    margin: 24px 0 36px;
+  }
+
   .menu-content {
     background: #ffffff;
   }
@@ -196,14 +221,12 @@ import { MENU } from '../../data/menu';
     justify-content: space-between;
     align-items: baseline;
     gap: 20px;
-    border-bottom: 2px solid var(--aegean);
-    padding-bottom: 12px;
     margin-bottom: 6px;
     flex-wrap: wrap;
   }
 
   .menu-panel-head h2 {
-    font-size: 1.35rem;
+    font-size: 1.8rem;
   }
 
   .menu-panel-note {
@@ -232,7 +255,7 @@ import { MENU } from '../../data/menu';
 
   .menu-item-name {
     font-weight: 600;
-    font-size: 0.97rem;
+    font-size: 1.08rem;
     display: flex;
     align-items: center;
     gap: 7px;
@@ -240,24 +263,21 @@ import { MENU } from '../../data/menu';
   }
 
   .menu-item-desc {
-    font-size: 0.84rem;
+    font-size: 1rem;
+    font-weight: 500;
     color: var(--ink-soft);
     margin-top: 4px;
   }
 
   .menu-item-price {
     font-family: 'Playfair Display', Georgia, serif;
-    font-weight: 600;
-    font-size: 0.97rem;
+    font-weight: 700;
+    font-size: 1.2rem;
     white-space: nowrap;
     color: var(--clay);
   }
 
   .menu-cta {
-    margin-top: 40px;
-    background: var(--sand-deep);
-    border-radius: var(--radius);
-    padding: 28px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -265,10 +285,89 @@ import { MENU } from '../../data/menu';
     flex-wrap: wrap;
   }
 
-  .menu-cta p {
+  .menu-cta-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .menu-cta-heading {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.15rem;
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: #9e1b1e;
     max-width: 32ch;
+    margin: 0;
+  }
+
+  .menu-cta-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #9e1b1e;
+    max-width: 60ch;
+    margin: 0;
+  }
+
+  .menu-cta-phone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex: none;
+    border-radius: 999px;
+    background: #9e1b1e;
+    color: #ffffff;
+    text-decoration: none;
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+
+  .menu-cta-phone svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .menu-cta-phone:hover {
+    background: #6b0c0f;
+    transform: translateY(-1px);
+  }
+
+  .menu-cta-note {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .menu-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 14px 30px;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(60, 10, 10, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .menu-cta-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
   }
 
   @media (max-width: 760px) {
