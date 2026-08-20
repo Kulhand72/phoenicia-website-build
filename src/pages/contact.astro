@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import storefrontPhoto from '../assets/contact-storefront.jpg';
 
 const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
 ---
@@ -69,14 +70,18 @@ const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
         </div>
       </div>
 
-      <div class="map-frame card">
-        <iframe
-          src="https://maps.google.com/maps?q=Phoenicia%20Mediterranean%20Deli%2015344%20Manchester%20Rd%20Ballwin%20MO&t=&z=13&ie=UTF8&iwloc=&output=embed"
-          allowfullscreen
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          title="Map showing Phoenicia Mediterranean Deli location"
-        ></iframe>
+      <div
+        class="storefront-photo card"
+        role="img"
+        aria-label="The Phoenicia Mediterranean Deli storefront sign and windows"
+      >
+        <img
+          src={storefrontPhoto.src}
+          width={storefrontPhoto.width}
+          height={storefrontPhoto.height}
+          alt="The Phoenicia Mediterranean Deli storefront sign and windows"
+          loading="eager"
+        />
       </div>
     </div>
   </section>
@@ -142,6 +147,7 @@ const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 48px;
+    align-items: stretch;
   }
 
   .contact-card {
@@ -216,16 +222,20 @@ const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
     height: 18px;
   }
 
-  .map-frame {
+  .storefront-photo {
+    position: relative;
     overflow: hidden;
-    height: 100%;
     min-height: 300px;
+    padding: 0;
   }
 
-  .map-frame iframe {
+  .storefront-photo img {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    border: 0;
+    object-fit: contain;
+    object-position: center;
     display: block;
   }
 
