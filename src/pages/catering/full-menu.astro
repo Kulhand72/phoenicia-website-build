@@ -344,8 +344,13 @@ const CATERING_MENU = [
     tab.addEventListener('click', () => activate(tab.dataset.target ?? ''));
   });
 
-  const hashId = window.location.hash.replace('#', '');
-  if (hashId && document.getElementById('panel-' + hashId)) {
-    activate(hashId);
+  function activateFromHash() {
+    const hashId = window.location.hash.replace('#', '');
+    if (hashId && document.getElementById('panel-' + hashId)) {
+      activate(hashId);
+    }
   }
+
+  activateFromHash();
+  window.addEventListener('hashchange', activateFromHash);
 </script>
