@@ -1,107 +1,410 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import menuBg from '../assets/menu-landing-bg.jpg';
+import { MENU } from '../data/menu';
 ---
 
-<Layout title="Menu" active="menu" fitViewport>
-  <section class="menu-hero">
-    <img
-      src={menuBg.src}
-      width={menuBg.width}
-      height={menuBg.height}
-      alt="An evening spread of Phoenicia Mediterranean dishes"
-      class="menu-hero-bg"
-      loading="eager"
-      fetchpriority="high"
-    />
-    <div class="menu-hero-inner">
-      <h1>Our Menu</h1>
-      <a href="/menu/full" class="menu-btn">See the Full Menu</a>
+<Layout title="Menu" active="menu">
+  <section class="menu-tabs-sticky">
+    <div class="wrap">
+      <div class="menu-tabs" id="menuTabs" role="tablist">
+        {MENU.map((cat, i) => (
+          <button
+            type="button"
+            class={'menu-tab' + (i === 0 ? ' active' : '') + (cat.highlight ? ' menu-tab-highlight' : '')}
+            data-target={cat.id}
+            role="tab"
+            aria-selected={i === 0 ? 'true' : 'false'}
+          >
+            {cat.highlight && <span class="tab-star" aria-hidden="true">&#9733;</span>}
+            {cat.label}
+            {cat.highlight && <span class="tab-new-badge">New</span>}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="menu-divider" aria-hidden="true">
+    <span class="menu-divider-line"></span>
+    <svg class="menu-divider-mark" viewBox="0 0 32 24">
+      <circle cx="4" cy="12" r="2.5" fill="currentColor" />
+      <path d="M16 2 L22 12 L16 22 L10 12 Z" fill="currentColor" />
+      <circle cx="28" cy="12" r="2.5" fill="currentColor" />
+    </svg>
+    <span class="menu-divider-line"></span>
+  </div>
+
+  <section class="menu-content" style="padding-top: 32px;">
+    <div class="wrap">
+      <div id="menuPanels">
+        {MENU.map((cat, i) => (
+          <div class={'menu-panel' + (i === 0 ? ' active' : '')} id={'panel-' + cat.id} role="tabpanel">
+            <div class="menu-panel-head">
+              <h2>{cat.title}</h2>
+              {cat.note && <div class="menu-panel-note">{cat.note}</div>}
+            </div>
+            <div class="menu-grid">
+              {cat.items.map((item) => (
+                <div class="menu-item">
+                  <div class="menu-item-text">
+                    <div class="menu-item-name">
+                      {item.n}
+                      {item.tag && <span class="tag">{item.tag}</span>}
+                    </div>
+                    {item.d && <div class="menu-item-desc">{item.d}</div>}
+                  </div>
+                  <div class="menu-item-price">{item.p}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="menu-divider menu-divider--inline" aria-hidden="true">
+        <span class="menu-divider-line"></span>
+        <svg class="menu-divider-mark" viewBox="0 0 32 24">
+          <circle cx="4" cy="12" r="2.5" fill="currentColor" />
+          <path d="M16 2 L22 12 L16 22 L10 12 Z" fill="currentColor" />
+          <circle cx="28" cy="12" r="2.5" fill="currentColor" />
+        </svg>
+        <span class="menu-divider-line"></span>
+      </div>
+
+      <div class="menu-cta">
+        <div class="menu-cta-text">
+          <p class="menu-cta-heading">Ready to start an order?</p>
+          <p class="menu-cta-line">
+            Give us a call
+            <a href="tel:3147649222" class="menu-cta-phone" aria-label="Call (314) 764-9222">
+              <svg viewBox="0 0 24 24"><use href="#icon-phone" /></svg>
+            </a>
+            or click the &ldquo;Start an Order&rdquo; button.
+          </p>
+          <p class="menu-cta-note">Pickup runs 20&ndash;30 minutes.</p>
+        </div>
+        <button type="button" class="menu-cta-btn" data-order-placeholder>Start an Order</button>
+      </div>
     </div>
   </section>
 </Layout>
 
 <style>
-  .menu-hero {
-    position: relative;
-    overflow: hidden;
-    flex: 1 1 auto;
-    min-height: 0;
-    padding: 0;
+  /* Menu page keeps its original fonts — excluded from the site-wide
+     GFS Didot / GFS Neohellenic type change. */
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  p {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  .menu-tabs-sticky {
+    position: sticky;
+    top: 81px;
+    z-index: 90;
+    background: #ffffff;
+    padding: 18px 0;
+  }
+
+  .menu-tabs {
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
+    flex-wrap: wrap;
+    gap: 9px;
   }
 
-  .menu-hero-bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 38%;
-    z-index: 0;
-  }
-
-  .menu-hero-inner {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    text-align: center;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.8), 0 1px 3px rgba(0,0,0,0.9);
-    background-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 45%, rgba(0, 0, 0, 0) 75%) !important;
-    box-shadow: none !important;
-    padding: 2.5rem !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-  }
-
-  @media (max-width: 900px) {
-    .menu-hero-inner {
-      padding-top: 50px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .menu-hero-inner {
-      padding-top: 30px;
-    }
-  }
-
-  .menu-hero-inner h1 {
+  .menu-tab {
+    font-family: var(--font-body);
+    font-size: 0.76rem;
     font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.02;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 9px 17px;
+    border-radius: 999px;
+    border: 1.5px solid var(--olive);
+    background: transparent;
+    color: var(--olive);
+    cursor: pointer;
     white-space: nowrap;
-    font-size: clamp(1.1rem, 4.9vw, 4.2rem);
-    color: var(--sand);
-    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.92), 0 6px 22px rgba(0, 0, 0, 0.75);
-    margin-bottom: 63px;
+    transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .menu-btn {
+  .menu-tab:hover {
+    transform: translateY(-1px);
+    border-color: #424d26;
+  }
+
+  .menu-tab.active {
+    background: linear-gradient(180deg, var(--olive) 0%, #424d26 100%);
+    border-color: #424d26;
+    color: #ffffff;
+    box-shadow: 0 6px 16px rgba(66, 77, 38, 0.32);
+  }
+
+  .menu-divider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 28px;
+    color: #9e1b1e;
+  }
+
+  .menu-divider-line {
+    flex: 1 1 auto;
+    height: 2px;
+    background: currentColor;
+  }
+
+  .menu-divider-mark {
+    flex: none;
+    width: 48px;
+    height: 24px;
+    margin: 0 4px;
+  }
+
+  .menu-divider--inline {
+    padding: 0;
+    margin: 24px 0 36px;
+  }
+
+  .menu-content {
+    background: #ffffff;
+  }
+
+  :global(body) {
+    background: #ffffff;
+  }
+
+  .menu-tab-highlight {
+    border-width: 2px;
+  }
+
+  .menu-tab-highlight.active {
+    box-shadow: 0 6px 16px rgba(66, 77, 38, 0.32);
+  }
+
+  .tab-star {
+    color: var(--saffron);
+    margin-right: 4px;
+    font-size: 0.85em;
+  }
+
+  .tab-new-badge {
+    margin-left: 6px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    background: var(--maroon);
+    color: var(--sand);
+    padding: 2px 6px;
+    border-radius: 999px;
+    vertical-align: middle;
+  }
+
+  .menu-tab-highlight.active .tab-new-badge {
+    background: var(--sand);
+    color: var(--maroon);
+  }
+
+  .menu-panel {
+    display: none;
+  }
+
+  .menu-panel.active {
+    display: block;
+  }
+
+  .menu-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+
+  .menu-panel-head h2 {
+    font-size: 1.8rem;
+  }
+
+  .menu-panel-note {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 36px;
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .menu-item-text {
+    max-width: 70%;
+  }
+
+  .menu-item-name {
+    font-weight: 600;
+    font-size: 1.08rem;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+  }
+
+  .menu-item-desc {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  .menu-item-price {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    white-space: nowrap;
+    color: var(--clay);
+  }
+
+  .menu-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .menu-cta-text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .menu-cta-heading {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: #9e1b1e;
+    max-width: 32ch;
+    margin: 0;
+  }
+
+  .menu-cta-line {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #9e1b1e;
+    max-width: 60ch;
+    margin: 0;
+  }
+
+  .menu-cta-phone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex: none;
+    border-radius: 999px;
+    background: #9e1b1e;
+    color: #ffffff;
+    text-decoration: none;
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+
+  .menu-cta-phone svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .menu-cta-phone:hover {
+    background: #6b0c0f;
+    transform: translateY(-1px);
+  }
+
+  .menu-cta-note {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .menu-cta-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-body);
     font-weight: 700;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    font-size: clamp(1rem, 1.8vw, 1.15rem);
+    font-size: 0.85rem;
     color: #fbeee9;
     background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
     border: 1px solid rgba(255, 255, 255, 0.28);
     border-radius: 999px;
-    padding: clamp(16px, 2.4vh, 22px) clamp(40px, 5.5vw, 58px);
+    padding: 14px 30px;
     cursor: pointer;
-    text-decoration: none;
-    box-shadow: 0 12px 26px rgba(60, 10, 10, 0.38);
+    white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(60, 10, 10, 0.28);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .menu-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 32px rgba(60, 10, 10, 0.46);
+  .menu-cta-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
+  }
+
+  @media (max-width: 760px) {
+    .menu-grid {
+      grid-template-columns: 1fr;
+    }
+    .menu-item-text {
+      max-width: 100%;
+    }
+    .menu-cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 </style>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.menu-tab');
+  const panels = document.querySelectorAll<HTMLDivElement>('.menu-panel');
+
+  function activate(id: string) {
+    tabs.forEach((t) => {
+      const isActive = t.dataset.target === id;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', String(isActive));
+    });
+    panels.forEach((p) => {
+      p.classList.toggle('active', p.id === 'panel-' + id);
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => activate(tab.dataset.target ?? ''));
+  });
+
+  const hashId = window.location.hash.replace('#', '');
+  if (hashId && document.getElementById('panel-' + hashId)) {
+    activate(hashId);
+  }
+</script>

@@ -21,27 +21,26 @@ const { active } = Astro.props as Props;
     <nav class="primary" id="primaryNav">
       <a href="/home" class={active === 'home' ? 'active' : ''}>Home</a>
       <a href="/about" class={active === 'about' ? 'active' : ''}>About</a>
+      <a href="/menu" class={active === 'menu' ? 'active' : ''}>Menu</a>
+      <a href="/cooking-classes" class={active === 'cooking-classes' ? 'active' : ''}>Cooking Classes</a>
       <div class="nav-item">
-        <a href="/menu" class={active === 'menu' ? 'active' : ''}>
-          Menu
+        <a href="/catering" class={active === 'catering' ? 'active' : ''}>
+          Catering
         </a>
         <button
           type="button"
           class="dropdown-toggle"
           aria-expanded="false"
-          aria-label="Show menu options"
+          aria-label="Show catering options"
         >
           <svg class="chevron" viewBox="0 0 24 24" width="12" height="12">
             <path d="M6 8l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
         <div class="dropdown-menu">
-          <a href="/menu">Full Menu</a>
           <a href="/catering">Catering Menu</a>
         </div>
       </div>
-      <a href="/cooking-classes" class={active === 'cooking-classes' ? 'active' : ''}>Cooking Classes</a>
-      <a href="/catering" class={active === 'catering' ? 'active' : ''}>Catering</a>
       <a href="/contact" class={active === 'contact' ? 'active' : ''}>Contact</a>
       <a href="https://phoenicia-mediterranean.com/" target="_blank" rel="noopener">Online Store</a>
     </nav>
