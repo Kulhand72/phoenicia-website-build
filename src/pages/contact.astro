@@ -320,7 +320,8 @@ const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
   .storefront-photo {
     position: relative;
     overflow: hidden;
-    min-height: 300px;
+    align-self: start;
+    aspect-ratio: 3 / 2;
     padding: 0;
     border-color: rgba(43, 33, 24, 0.16);
     box-shadow: 0 10px 28px rgba(43, 33, 24, 0.14);
@@ -331,8 +332,8 @@ const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    object-position: center;
+    object-fit: cover;
+    object-position: center bottom;
     display: block;
   }
 
