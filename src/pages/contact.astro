@@ -6,13 +6,9 @@ const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
 ---
 
 <Layout title="Contact" active="contact">
-  <section class="page-banner">
-    <div class="page-banner-inner">
-      <div class="eyebrow">
-        <svg class="mark" viewBox="0 0 100 100"><use href="#icon-sunmark" /></svg>
-        Visit or Call
-      </div>
-      <h1>Find us in Ballwin.</h1>
+  <section class="contact-hero">
+    <div class="wrap">
+      <h1>Find Phoenicia Mediterranean Deli</h1>
     </div>
   </section>
 
@@ -24,11 +20,17 @@ const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
           <div>
             <div class="label">Address</div>
             <a
-              class="value"
+              class="value address-link"
               href="https://www.google.com/maps/search/?api=1&query=Phoenicia+Mediterranean+Deli+15344+Manchester+Rd+Ballwin+MO"
               target="_blank"
               rel="noopener"
             >15344 Manchester Rd, Ballwin, MO 63011</a>
+            <a
+              class="pill-btn directions-btn"
+              href="https://www.google.com/maps/dir/?api=1&destination=Phoenicia+Mediterranean+Deli+15344+Manchester+Rd+Ballwin+MO+63011"
+              target="_blank"
+              rel="noopener"
+            >Directions to Phoenicia</a>
           </div>
         </div>
         <div class="contact-row">
@@ -42,26 +44,32 @@ const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
           <svg viewBox="0 0 24 24"><use href="#icon-clock" /></svg>
           <div>
             <div class="label">Hours</div>
-            <div class="value">Daily, 11:00 AM &ndash; 9:00 PM</div>
+            <div class="value hours-list">
+              <div class="hours-line"><span>Monday&ndash;Thursday</span><span>5:00 PM &ndash; 9:00 PM</span></div>
+              <div class="hours-line"><span>Friday&ndash;Saturday</span><span>11:00 AM &ndash; 9:00 PM</span></div>
+              <div class="hours-line"><span>Sunday</span><span>Closed</span></div>
+            </div>
+            <p class="hours-note">Sunday hours are unconfirmed &mdash; still need to verify.</p>
           </div>
         </div>
         <div class="contact-row">
           <svg viewBox="0 0 24 24"><use href="#icon-tray" /></svg>
           <div>
             <div class="label">Order</div>
-            <div class="value">Online ordering coming soon &mdash; call to order for now</div>
+            <button type="button" class="pill-btn order-btn" data-order-placeholder>Order Now</button>
+            <p class="order-note">Online ordering coming soon &mdash; call to order for now.</p>
           </div>
         </div>
         <div class="social-row">
           <a
-            class="social-btn"
+            class="social-btn instagram"
             href="https://www.instagram.com/phoeniciamediterranean/?hl=en"
             target="_blank"
             rel="noopener"
             aria-label="Instagram"
           ><svg viewBox="0 0 24 24"><use href="#icon-instagram" /></svg></a>
           <a
-            class="social-btn"
+            class="social-btn facebook"
             href="https://www.facebook.com/pages/category/Mediterranean-Restaurant/Phoenicia-Mediterranean-Deli-401178850234762/"
             target="_blank"
             rel="noopener"
@@ -143,6 +151,78 @@ const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
     flex: none;
   }
 
+  .contact-hero h1 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    font-size: clamp(2.2rem, 4.6vw, 3.5rem);
+    color: var(--ink);
+  }
+
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 12px 24px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(60, 10, 10, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .pill-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
+  }
+
+  .address-link {
+    display: block;
+  }
+
+  .directions-btn {
+    margin-top: 12px;
+  }
+
+  .order-btn {
+    margin-bottom: 8px;
+  }
+
+  .hours-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+
+  .hours-line {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    max-width: 360px;
+  }
+
+  .hours-line span:first-child {
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .hours-note,
+  .order-note {
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+
   .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -208,13 +288,24 @@ const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--aegean);
     color: var(--sand);
     transition: background 0.2s ease;
   }
 
-  .social-btn:hover {
-    background: var(--clay);
+  .social-btn.facebook {
+    background: #1877f2;
+  }
+
+  .social-btn.facebook:hover {
+    background: #0f5fc9;
+  }
+
+  .social-btn.instagram {
+    background: #e1306c;
+  }
+
+  .social-btn.instagram:hover {
+    background: #c22a5d;
   }
 
   .social-btn svg {
@@ -237,10 +328,6 @@ const INQUIRY_EMAIL = 'harpsoul6@gmail.com';
     object-fit: contain;
     object-position: center;
     display: block;
-  }
-
-  .class-section {
-    background: var(--sand-deep);
   }
 
   .section-sub {
