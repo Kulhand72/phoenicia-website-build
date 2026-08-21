@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { withBase } from '../lib/base';
 ---
 
 <Layout title="Welcome" chrome={false}>
@@ -13,7 +14,7 @@ import Layout from '../layouts/Layout.astro';
       <div class="loader" aria-hidden="true"><span></span></div>
     </div>
     <noscript>
-      <p class="noscript-link"><a href="/home">Continue to the site &rarr;</a></p>
+      <p class="noscript-link"><a href={withBase('/home')}>Continue to the site &rarr;</a></p>
     </noscript>
   </main>
 </Layout>
@@ -133,12 +134,14 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
+  import { withBase } from '../lib/base';
+
   const params = new URLSearchParams(window.location.search);
   const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 900 : 2600;
 
   if (!params.has('noskip')) {
     setTimeout(() => {
-      window.location.href = '/home';
+      window.location.href = withBase('/home');
     }, delay);
   }
 </script>

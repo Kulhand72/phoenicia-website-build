@@ -1,9 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { MENU } from '../data/menu';
+import { withBase } from '../lib/base';
+
+function slugify(s: string) {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
 ---
 
 <Layout title="Menu" active="menu">
+  <section class="menu-page-head">
+    <div class="wrap menu-page-head-row">
+      <h1>Main Menu</h1>
+      <div class="menu-page-head-cta">
+        <span class="menu-page-head-lead">For the catering full menu, click here:</span>
+        <a class="menu-page-head-btn" href={withBase('/catering/full-menu')}>Catering Full Menu</a>
+      </div>
+    </div>
+    <div class="wrap">
+      <p class="menu-page-head-note">Items marked <span class="v-letter">V</span> are Vegan options.</p>
+    </div>
+  </section>
+
   <section class="menu-tabs-sticky">
     <div class="wrap">
       <div class="menu-tabs" id="menuTabs" role="tablist">
@@ -53,7 +71,20 @@ import { MENU } from '../data/menu';
                     </div>
                     {item.d && <div class="menu-item-desc">{item.d}</div>}
                   </div>
-                  <div class="menu-item-price">{item.p}</div>
+                  <div class="menu-item-actions">
+                    <div class="menu-item-price">{item.p}</div>
+                    <button
+                      type="button"
+                      class="add-cart-btn"
+                      data-add-to-cart
+                      data-item-id={`${cat.id}-${slugify(item.n)}`}
+                      data-item-name={item.n}
+                      data-item-price={item.p}
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-cart" /></svg>
+                      <span class="add-cart-label">Add</span>
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -98,6 +129,87 @@ import { MENU } from '../data/menu';
 
   p {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  .menu-page-head {
+    padding: 32px 0 0;
+    background: #ffffff;
+  }
+
+  .menu-page-head-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .menu-page-head h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.1rem;
+    color: var(--ink);
+  }
+
+  .menu-page-head-cta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .menu-page-head-lead {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .menu-page-head-note {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 6px 0 0;
+  }
+
+  .v-letter {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #2e7d32;
+  }
+
+  .tag {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #2e7d32;
+    background: rgba(46, 125, 50, 0.12);
+  }
+
+  .menu-page-head-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 12px 24px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(60, 10, 10, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .menu-page-head-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
   }
 
   .menu-tabs-sticky {
@@ -269,12 +381,55 @@ import { MENU } from '../data/menu';
     margin-top: 4px;
   }
 
+  .menu-item-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex: none;
+  }
+
   .menu-item-price {
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 700;
     font-size: 1.2rem;
     white-space: nowrap;
     color: var(--clay);
+  }
+
+  .add-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--olive);
+    background: transparent;
+    border: 1.5px solid var(--olive);
+    border-radius: 999px;
+    padding: 5px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+
+  .add-cart-btn svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .add-cart-btn:hover {
+    background: var(--olive);
+    color: #ffffff;
+    transform: translateY(-1px);
+  }
+
+  .add-cart-btn.added {
+    background: var(--olive);
+    color: #ffffff;
   }
 
   .menu-cta {

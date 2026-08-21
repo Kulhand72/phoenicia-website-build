@@ -2,6 +2,7 @@
 import Icons from '../components/Icons.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { withBase } from '../lib/base';
 import '../styles/global.css';
 
 interface Props {
@@ -28,8 +29,8 @@ const {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="icon" href={withBase('/favicon.ico')} />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -89,7 +90,7 @@ const {
     const toast = document.getElementById('orderToast');
     if (!toast) return;
 
-    toast.textContent = 'Online ordering is on its way — call (314) 764-9222 to order for now.';
+    toast.textContent = 'Online ordering is on its way — call (314) 764-9222 to place this order for now.';
     toast.classList.add('show');
 
     clearTimeout(toastTimer);

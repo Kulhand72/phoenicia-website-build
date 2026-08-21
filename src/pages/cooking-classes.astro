@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import cookingBg from '../assets/cooking-classes-bg.jpg';
+import { withBase } from '../lib/base';
 ---
 
 <Layout title="Cooking Classes" active="cooking-classes" fitViewport>
@@ -25,7 +26,7 @@ import cookingBg from '../assets/cooking-classes-bg.jpg';
         us what you are looking to learn and let us help you on your journey. Thank you!
       </p>
 
-      <a href="/cooking-classes/inquire" class="inquire-btn">Inquire Now</a>
+      <a href={withBase('/cooking-classes/inquire')} class="inquire-btn">Inquire Now</a>
     </div>
   </section>
 </Layout>

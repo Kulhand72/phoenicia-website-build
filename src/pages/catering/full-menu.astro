@@ -1,5 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { withBase } from '../../lib/base';
+
+function slugify(s: string) {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
 
 const CATERING_MENU = [
   {
@@ -43,12 +48,75 @@ const CATERING_MENU = [
       { n: 'Meat Pies (dozen)', p: '$24.00' },
     ],
   },
-  { id: 'meeting-boxes', label: 'Meeting Gourmet Boxes', title: 'Meeting Gourmet Boxes' },
-  { id: 'ready-to-eat-meals', label: 'Ready-to-Eat Meals', title: 'Ready-to-Eat Meals' },
+  {
+    id: 'meeting-boxes',
+    label: 'Meeting Gourmet Boxes',
+    title: 'Meeting Gourmet Boxes',
+    note: 'Customize your lunch with your choice of any of our most popular lunch sandwiches — all individually packaged, served with dessert, napkins, and utensils. Minimum 10 boxes.',
+    tiers: [
+      {
+        label: 'Tier A — Lunch Essential',
+        price: '$16.99/box',
+        formula: 'Salad + Sandwich + Dessert/Fruit',
+        items: [
+          'Greek Salad + Chicken Shawarma Sandwich + Baklawa',
+          'Fattoosh + Beef Shawarma or Gyro Lamb Sandwich + Baklawa',
+          'Med Salad + Falafel Sandwich + Apple (Vegetarian)',
+          'Med Salad + Grape Leaves Sandwich + Apple (Vegetarian)',
+        ],
+      },
+      {
+        label: 'Tier B — Lunch Delight',
+        price: '$20.99/box',
+        formula: 'Salad + Appetizer + Sandwich + Dessert/Fruit',
+        items: [
+          'Greek Salad + Hummus + Chicken Shawarma Sandwich + Baklawa',
+          'Fattoosh + Baba Ghanouj + Gyro Sandwich + Baklawa',
+          'Med Salad + Hummus + Falafel Sandwich + Kanafeh (Vegetarian)',
+          'Med Salad + Grape Leaves Sandwich + Baba Ghanouj + Kanafeh (Vegetarian)',
+        ],
+      },
+      {
+        label: 'Tier C — Lunch Gourmet',
+        price: '$26.99/box',
+        formula: 'Manakish + Salad + Appetizer + Sandwich + Dessert/Fruit',
+        items: [
+          'Spinach Pie + Greek Salad + Hummus + Kibbeh + Chicken Shawarma + Baklawa',
+          'Meat Pie + Fattoosh + Baba Ghanouj + Kibbeh + Beef Shawarma + Baklawa',
+          'Spinach Cheese Pie + Med Salad + Hummus + Veggie Grape Leaves + Falafel Gourmet + Kanafeh (Vegetarian)',
+          'Cheese Pie + Greek Salad + Grape Leaves Sandwich + 1 Makdoos + Baba Ghanouj + Kanafeh (Vegetarian)',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'ready-to-eat-meals',
+    label: 'Ready-to-Eat Meals',
+    title: 'Ready-to-Eat Meals',
+    note: 'Classic Middle Eastern stews, made of tender beef, vegetables, and tomato sauce, typically served over rice.',
+    items: [
+      { n: '10 Meals of "Molokhia" with Rice', d: 'Jute leaf stew, popular throughout the Middle East, high in folic acid, iron, calcium, and vitamin C.', p: '$120.00' },
+      { n: '10 Meals of "Bamia" Okra with Beef Stew and Rice (made to order)', d: 'Tender beef, okra, and tomato sauce over rice.', p: '$120.00' },
+      { n: '10 Meals of "Fasolia" White Bean with Meat Stew and Rice (made to order)', d: 'Tender beef, white beans, and tomato sauce over rice.', p: '$120.00' },
+      { n: '10 Meals of "Loubia" Green Bean with Meat Stew and Rice (made to order)', d: 'Tender beef, green beans, and tomato sauce over rice.', p: '$120.00' },
+      { n: '10 Vegan Meals of "Loubia" Green Bean with Rice (made to order)', d: 'Sautéed green beans, onions, and tomatoes over rice.', p: '$120.00' },
+      { n: '10 Meals of Kafta & Potato Stew (made to order, minimum 10 meals)', d: 'Spiced ground beef or lamb with cumin, coriander, and parsley, plus tender potatoes.', p: '$9.99/meal' },
+    ],
+  },
 ];
 ---
 
 <Layout title="Catering Full Menu" active="catering">
+  <section class="menu-page-head">
+    <div class="wrap menu-page-head-row">
+      <h1>Catering Full Menu</h1>
+      <div class="menu-page-head-cta">
+        <span class="menu-page-head-lead">For the main menu, click here:</span>
+        <a class="menu-page-head-btn" href={withBase('/menu/full')}>Main Menu</a>
+      </div>
+    </div>
+  </section>
+
   <section class="menu-tabs-sticky">
     <div class="wrap">
       <div class="menu-tabs" id="menuTabs" role="tablist">
@@ -94,7 +162,54 @@ const CATERING_MENU = [
                       <div class="menu-item-name">{item.n}</div>
                       {item.d && <div class="menu-item-desc">{item.d}</div>}
                     </div>
-                    <div class="menu-item-price">{item.p}</div>
+                    <div class="menu-item-actions">
+                      <div class="menu-item-price">{item.p}</div>
+                      <button
+                        type="button"
+                        class="add-cart-btn"
+                        data-add-to-cart
+                        data-item-id={`${cat.id}-${slugify(item.n)}`}
+                        data-item-name={item.n}
+                        data-item-price={item.p}
+                      >
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-cart" /></svg>
+                        <span class="add-cart-label">Add</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : cat.tiers ? (
+              <div class="tier-list">
+                {cat.tiers.map((tier) => (
+                  <div class="tier-block">
+                    <div class="tier-head">
+                      <h3>{tier.label}</h3>
+                      <div class="tier-meta">{tier.formula} &middot; <span class="tier-price">{tier.price}</span></div>
+                    </div>
+                    <div class="menu-grid">
+                      {tier.items.map((item) => (
+                        <div class="menu-item">
+                          <div class="menu-item-text">
+                            <div class="menu-item-name">{item}</div>
+                          </div>
+                          <div class="menu-item-actions">
+                            <div class="menu-item-price">{tier.price}</div>
+                            <button
+                              type="button"
+                              class="add-cart-btn"
+                              data-add-to-cart
+                              data-item-id={`${cat.id}-${slugify(tier.label)}-${slugify(item)}`}
+                              data-item-name={item}
+                              data-item-price={tier.price}
+                            >
+                              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-cart" /></svg>
+                              <span class="add-cart-label">Add</span>
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -123,12 +238,73 @@ const CATERING_MENU = [
 </Layout>
 
 <style>
-  h2 {
+  h2,
+  h3 {
     font-family: 'Playfair Display', Georgia, serif;
   }
 
   p {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  .menu-page-head {
+    padding: 32px 0 0;
+    background: #ffffff;
+  }
+
+  .menu-page-head-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .menu-page-head h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.1rem;
+    color: var(--ink);
+  }
+
+  .menu-page-head-cta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .menu-page-head-lead {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .menu-page-head-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 12px 24px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(60, 10, 10, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .menu-page-head-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
   }
 
   .menu-tabs-sticky {
@@ -242,6 +418,40 @@ const CATERING_MENU = [
     padding: 16px 0;
   }
 
+  .tier-list {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .tier-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+    border-bottom: 2px solid var(--olive);
+  }
+
+  .tier-head h3 {
+    font-size: 1.25rem;
+    color: var(--olive);
+  }
+
+  .tier-meta {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .tier-price {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--clay);
+  }
+
   .menu-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -276,12 +486,55 @@ const CATERING_MENU = [
     margin-top: 4px;
   }
 
+  .menu-item-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex: none;
+  }
+
   .menu-item-price {
     font-family: 'Playfair Display', Georgia, serif;
     font-weight: 700;
     font-size: 1.2rem;
     white-space: nowrap;
     color: var(--clay);
+  }
+
+  .add-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--olive);
+    background: transparent;
+    border: 1.5px solid var(--olive);
+    border-radius: 999px;
+    padding: 5px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+
+  .add-cart-btn svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .add-cart-btn:hover {
+    background: var(--olive);
+    color: #ffffff;
+    transform: translateY(-1px);
+  }
+
+  .add-cart-btn.added {
+    background: var(--olive);
+    color: #ffffff;
   }
 
   @media (max-width: 760px) {

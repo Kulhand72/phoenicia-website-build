@@ -1,3 +1,5 @@
 ---
-return Astro.redirect('/menu' + Astro.url.search);
+import { withBase } from '../../lib/base';
+
+return Astro.redirect(withBase('/menu') + Astro.url.search);
 ---

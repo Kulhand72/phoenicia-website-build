@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { withBase } from '../lib/base';
 
 const TIME_SLOTS = [
   '7:00 PM', '7:15 PM', '7:30 PM',
@@ -41,7 +42,7 @@ const TIME_SLOTS = [
       </div>
 
       <div class="start-order-wrap">
-        <a href="/menu" class="btn-pill-lg">Start Your Order</a>
+        <a href={withBase('/menu')} class="btn-pill-lg">Start Your Order</a>
         <p class="start-order-note">Browse the full menu next &mdash; cart &amp; checkout are coming in a future step.</p>
       </div>
     </div>

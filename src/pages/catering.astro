@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { withBase } from '../lib/base';
 ---
 
 <Layout title="Catering" active="catering">
@@ -57,7 +58,7 @@ import Layout from '../layouts/Layout.astro';
               <h4>Cooking Classes</h4>
               <p>
                 Hands-on Mediterranean cooking classes, $55 per person. Send an inquiry through the
-                <a href="/contact">contact page</a> or call to check current availability and book a date.
+                <a href={withBase('/contact')}>contact page</a> or call to check current availability and book a date.
               </p>
             </div>
           </li>
@@ -75,7 +76,7 @@ import Layout from '../layouts/Layout.astro';
           <div>Meeting gourmet boxes (min. 10)</div><div>$169.90+</div>
         </div>
         <a href="tel:3147649222" class="btn btn-gold">Call to Book Catering</a>
-        <a href="/menu#catering-menu" class="btn btn-outline-light" style="margin-top: 12px;">See Full Catering Menu</a>
+        <a href={withBase('/catering/full-menu')} class="btn btn-outline-light" style="margin-top: 12px;">See Full Catering Menu</a>
       </div>
     </div>
   </section>

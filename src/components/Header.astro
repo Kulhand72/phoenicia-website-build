@@ -1,5 +1,6 @@
 ---
 import headerLogo from '../assets/phoenicia-header-logo.png';
+import { withBase } from '../lib/base';
 
 interface Props {
   active?: 'home' | 'about' | 'menu' | 'cooking-classes' | 'catering' | 'contact';
@@ -9,7 +10,7 @@ const { active } = Astro.props as Props;
 
 <header class="site-header">
   <div class="nav-row">
-    <a class="logo" href="/home" aria-label="Phoenicia Mediterranean Deli — home">
+    <a class="logo" href={withBase('/home')} aria-label="Phoenicia Mediterranean Deli — home">
       <img
         src={headerLogo.src}
         width={headerLogo.width}
@@ -19,10 +20,10 @@ const { active } = Astro.props as Props;
       />
     </a>
     <nav class="primary" id="primaryNav">
-      <a href="/home" class={active === 'home' ? 'active' : ''}>Home</a>
-      <a href="/about" class={active === 'about' ? 'active' : ''}>About</a>
-      <a href="/menu" class={active === 'menu' ? 'active' : ''}>Menu</a>
-      <a href="/cooking-classes" class={active === 'cooking-classes' ? 'active' : ''}>Cooking Classes</a>
+      <a href={withBase('/home')} class={active === 'home' ? 'active' : ''}>Home</a>
+      <a href={withBase('/about')} class={active === 'about' ? 'active' : ''}>About</a>
+      <a href={withBase('/menu')} class={active === 'menu' ? 'active' : ''}>Menu</a>
+      <a href={withBase('/cooking-classes')} class={active === 'cooking-classes' ? 'active' : ''}>Cooking Classes</a>
       <div class="nav-item">
         <button
           type="button"
@@ -36,14 +37,14 @@ const { active } = Astro.props as Props;
           </svg>
         </button>
         <div class="dropdown-menu">
-          <a href="/catering/full-menu">Catering Full Menu</a>
-          <a href="/catering/overview">Overview &amp; Event Planning</a>
-          <a href="/catering/full-menu#bulk-trays">Bulk Trays &amp; Appetizers</a>
-          <a href="/catering/full-menu#meeting-boxes">Meeting Gourmet Boxes</a>
-          <a href="/catering/full-menu#ready-to-eat-meals">Ready-to-Eat Meals</a>
+          <a href={withBase('/catering/full-menu')}>Catering Full Menu</a>
+          <a href={withBase('/catering/overview')}>Overview &amp; Event Planning</a>
+          <a href={withBase('/catering/full-menu#bulk-trays')}>Bulk Trays &amp; Appetizers</a>
+          <a href={withBase('/catering/full-menu#meeting-boxes')}>Meeting Gourmet Boxes</a>
+          <a href={withBase('/catering/full-menu#ready-to-eat-meals')}>Ready-to-Eat Meals</a>
         </div>
       </div>
-      <a href="/contact" class={active === 'contact' ? 'active' : ''}>Contact</a>
+      <a href={withBase('/contact')} class={active === 'contact' ? 'active' : ''}>Contact</a>
       <a href="https://phoenicia-mediterranean.com/" target="_blank" rel="noopener">Online Store</a>
     </nav>
     <div class="header-actions">
@@ -51,6 +52,26 @@ const { active } = Astro.props as Props;
         <svg viewBox="0 0 24 24"><use href="#icon-phone" /></svg>
         (314) 764-9222
       </a>
+      <div class="cart-item">
+        <button
+          type="button"
+          class="cart-toggle"
+          aria-expanded="false"
+          aria-haspopup="true"
+          aria-label="View cart"
+        >
+          <svg viewBox="0 0 24 24"><use href="#icon-cart" /></svg>
+          <span class="cart-badge" id="cartBadge" hidden>0</span>
+        </button>
+        <div class="cart-dropdown">
+          <p class="cart-empty" id="cartEmpty">Your cart is empty.</p>
+          <div class="cart-lines" id="cartLines"></div>
+          <div class="cart-footer" id="cartFooter" hidden>
+            <div class="cart-total">Estimated total: <span id="cartTotal">$0.00</span></div>
+            <button type="button" class="cart-checkout-btn" data-order-placeholder>Checkout</button>
+          </div>
+        </div>
+      </div>
       <button type="button" class="header-order-btn" data-order-placeholder>Order Now</button>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
         <svg viewBox="0 0 24 24" id="navToggleIcon"><use href="#icon-menu" /></svg>
@@ -282,6 +303,218 @@ const { active } = Astro.props as Props;
     box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
   }
 
+  .cart-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .cart-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex: none;
+    border-radius: 999px;
+    border: 1px solid var(--line-on-dark);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--sand);
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+
+  .cart-toggle:hover {
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateY(-1px);
+  }
+
+  .cart-toggle svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: #9e1b1e;
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+  }
+
+  .cart-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 300px;
+    max-width: calc(100vw - 40px);
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.28);
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 120;
+  }
+
+  .cart-item.open .cart-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .cart-empty {
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    margin: 0;
+    text-align: center;
+    padding: 8px 0;
+  }
+
+  .cart-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .cart-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .cart-line:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .cart-line-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .cart-line-name {
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .cart-line-price {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+
+  .cart-line-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+  }
+
+  .cart-qty-btn {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .cart-qty-btn:hover {
+    background: var(--sand);
+  }
+
+  .cart-qty {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 700;
+    min-width: 14px;
+    text-align: center;
+  }
+
+  .cart-line-remove {
+    background: none;
+    border: none;
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 0 0 4px;
+  }
+
+  .cart-line-remove:hover {
+    color: #9e1b1e;
+  }
+
+  .cart-footer {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cart-total {
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .cart-checkout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 11px 20px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .cart-checkout-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
+  }
+
   .nav-toggle {
     display: none;
     background: none;
@@ -367,6 +600,14 @@ const { active } = Astro.props as Props;
     .phone-link {
       display: none;
     }
+    .cart-dropdown {
+      position: fixed;
+      top: 84px;
+      left: 12px;
+      right: 12px;
+      width: auto;
+      max-width: none;
+    }
   }
 
   @media (max-width: 400px) {
@@ -378,19 +619,96 @@ const { active } = Astro.props as Props;
 </style>
 
 <script>
+  import { getCart, getEstimatedTotal, setQty, removeItem, onChange } from '../scripts/cart';
+
   const navToggle = document.getElementById('navToggle');
   const primaryNav = document.getElementById('primaryNav');
   const navToggleIcon = document.getElementById('navToggleIcon');
   const dropdownItems = Array.from(document.querySelectorAll('.nav-item'));
 
+  const cartItem = document.querySelector<HTMLElement>('.cart-item');
+  const cartToggle = document.querySelector<HTMLButtonElement>('.cart-toggle');
+  const cartBadge = document.getElementById('cartBadge');
+  const cartEmpty = document.getElementById('cartEmpty');
+  const cartLines = document.getElementById('cartLines');
+  const cartFooter = document.getElementById('cartFooter');
+  const cartTotal = document.getElementById('cartTotal');
+
   const closeDropdown = (item) => {
     item.classList.remove('open');
-    item.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+    item.querySelector('.dropdown-toggle, .cart-toggle')?.setAttribute('aria-expanded', 'false');
   };
 
   const closeAllDropdowns = () => {
     dropdownItems.forEach(closeDropdown);
+    if (cartItem) closeDropdown(cartItem);
   };
+
+  function renderCart() {
+    const items = getCart();
+    const count = items.reduce((sum, i) => sum + i.qty, 0);
+
+    if (cartBadge) {
+      cartBadge.textContent = String(count);
+      cartBadge.hidden = count === 0;
+    }
+
+    if (cartEmpty) cartEmpty.hidden = items.length > 0;
+    if (cartFooter) cartFooter.hidden = items.length === 0;
+
+    if (cartLines) {
+      cartLines.innerHTML = items
+        .map(
+          (item) => `
+            <div class="cart-line" data-cart-line data-id="${item.id}">
+              <div class="cart-line-info">
+                <div class="cart-line-name">${item.name}</div>
+                <div class="cart-line-price">${item.price}</div>
+              </div>
+              <div class="cart-line-controls">
+                <button type="button" class="cart-qty-btn" data-cart-decrement aria-label="Decrease quantity">&minus;</button>
+                <span class="cart-qty">${item.qty}</span>
+                <button type="button" class="cart-qty-btn" data-cart-increment aria-label="Increase quantity">+</button>
+                <button type="button" class="cart-line-remove" data-cart-remove aria-label="Remove item">&times;</button>
+              </div>
+            </div>
+          `
+        )
+        .join('');
+    }
+
+    if (cartTotal) cartTotal.textContent = `$${getEstimatedTotal().toFixed(2)}`;
+  }
+
+  cartLines?.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    const line = target.closest<HTMLElement>('[data-cart-line]');
+    if (!line) return;
+    const id = line.dataset.id ?? '';
+    const items = getCart();
+    const current = items.find((i) => i.id === id);
+    if (!current) return;
+
+    if (target.closest('[data-cart-increment]')) {
+      setQty(id, current.qty + 1);
+    } else if (target.closest('[data-cart-decrement]')) {
+      setQty(id, current.qty - 1);
+    } else if (target.closest('[data-cart-remove]')) {
+      removeItem(id);
+    }
+  });
+
+  onChange(renderCart);
+  renderCart();
+
+  cartToggle?.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!cartItem) return;
+    const isOpen = cartItem.classList.toggle('open');
+    cartToggle.setAttribute('aria-expanded', String(!!isOpen));
+    dropdownItems.forEach(closeDropdown);
+  });
 
   navToggle?.addEventListener('click', () => {
     const isOpen = primaryNav?.classList.toggle('open');
@@ -422,13 +740,16 @@ const { active } = Astro.props as Props;
       dropdownItems.forEach((other) => {
         if (other !== item) closeDropdown(other);
       });
+      if (cartItem) closeDropdown(cartItem);
     });
   });
 
   document.addEventListener('click', (e) => {
+    const path = e.composedPath();
     dropdownItems.forEach((item) => {
-      if (!item.contains(e.target)) closeDropdown(item);
+      if (!path.includes(item)) closeDropdown(item);
     });
+    if (cartItem && !path.includes(cartItem)) closeDropdown(cartItem);
   });
 
   document.addEventListener('keydown', (e) => {

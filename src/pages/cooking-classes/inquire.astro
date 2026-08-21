@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { withBase } from '../../lib/base';
 ---
 
 <Layout title="Class Inquiry" active="cooking-classes">
@@ -25,7 +26,7 @@ import Layout from '../../layouts/Layout.astro';
       </p>
       <a href="tel:3147649222" class="btn btn-primary" style="margin-top: 24px;">Call (314) 764-9222</a>
       <p class="back-link">
-        <a href="/cooking-classes">&larr; Back to Cooking Classes</a>
+        <a href={withBase('/cooking-classes')}>&larr; Back to Cooking Classes</a>
       </p>
     </div>
   </section>
