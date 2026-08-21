@@ -2,8 +2,89 @@
 import Layout from '../../layouts/Layout.astro';
 ---
 
-<Layout title="Overview & Event Planning" active="catering">
-  <section class="wrap" style="padding: 60px 0;">
-    <h1>Overview &amp; Event Planning</h1>
+<Layout title="Catering & Event Planning" active="catering">
+  <section class="overview">
+    <div class="wrap">
+      <h1>Catering &amp; Event Planning</h1>
+      <p class="lead">
+        We provide exceptional ready-to-eat food at affordable prices. We offer hot and cold
+        breakfast, lunch, and dinner as well as snacks, appetizers, and beverages. Our
+        professional and enthusiastic Catering Crew will always be ready to service your events.
+      </p>
+
+      <h2>Event Planning</h2>
+      <p class="section-sub">
+        Phoenicia is now collaborating with professional event planners, responsible for
+        organizing and executing various types of events, ranging from small gatherings to
+        large-scale conferences. They ensure that every aspect of the event is planned,
+        organized, and executed correctly, often working closely with clients to understand
+        their specific needs and preferences. Give us a call to schedule a meeting with
+        Phoenicia&rsquo;s event planner &mdash; we&rsquo;re here to answer all your questions and
+        help make your event unforgettable.
+      </p>
+
+      <div class="overview-cta">
+        <button type="button" class="pill-btn">Contact Us</button>
+      </div>
+    </div>
   </section>
 </Layout>
+
+<style>
+  .overview h1 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    font-size: clamp(2.2rem, 4.6vw, 3.5rem);
+    color: var(--ink);
+  }
+
+  .lead {
+    margin-top: 14px;
+    color: var(--ink-soft);
+    max-width: 68ch;
+    font-size: 1.05rem;
+  }
+
+  .overview h2 {
+    margin-top: 44px;
+    font-size: clamp(1.8rem, 3.2vw, 2.3rem);
+  }
+
+  .section-sub {
+    margin-top: 14px;
+    color: var(--ink-soft);
+    max-width: 70ch;
+  }
+
+  .overview-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 36px;
+  }
+
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 14px 30px;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(60, 10, 10, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .pill-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
+  }
+</style>
