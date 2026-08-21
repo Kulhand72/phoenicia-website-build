@@ -151,6 +151,7 @@ export const MENU: MenuCategory[] = [
       { n: 'Pickled Cucumbers', p: '$7.99' },
       { n: 'Pita Bread Bag, 8 Loaves', p: '$5.00' },
       { n: 'Saj Bread (Markouk)', d: '5 flatbreads, 20" size, soft golden flatbread ideal for wraps and sandwiches.', p: '$8.00' },
+      { n: 'Gluten Free Mediterranean Crackers', d: 'Crunchy, baked crackers with sesame, amaranth, flax, chia, quinoa and millet seeds. Certified Gluten Free, Non-GMO, contains sesame.', p: '$5.99' },
     ],
   },
   {

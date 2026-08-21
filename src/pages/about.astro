@@ -17,6 +17,8 @@ import Layout from '../layouts/Layout.astro';
         fresh-baked manakish, with vegetarian and vegan choices available. Phoenicia also caters
         events of any size and offers hands-on Mediterranean cooking classes by request.
       </p>
+      <p class="body-copy">Welcome to our restaurant! We are happy to serve you!</p>
+      <p class="signature">&mdash; Sam (Owner)</p>
     </div>
     <div
       class="about-photo-col"
@@ -43,33 +45,47 @@ import Layout from '../layouts/Layout.astro';
   .about-text-col {
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     background: #3b5323 !important;
     color: var(--sand);
-    padding: 4rem 3rem !important;
+    padding: 1rem 3rem 0.5rem !important;
   }
 
   .about-text-col h1 {
     font-weight: 700 !important;
     letter-spacing: -0.02em;
     line-height: 1.05;
-    font-size: 3.5rem !important;
+    font-size: 3.9rem !important;
     color: #ffffff !important;
     text-shadow: 0 2px 3px rgba(0, 0, 0, 0.92), 0 6px 22px rgba(0, 0, 0, 0.75);
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 3.05rem !important;
+    text-align: center !important;
   }
 
   .body-copy {
-    font-size: 1.55rem !important;
+    font-size: 2.325rem !important;
     font-weight: 600 !important;
-    line-height: 1.6 !important;
+    line-height: 1.08 !important;
     color: #ffffff !important;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 1.7rem !important;
   }
 
   .body-copy:last-child {
     margin-bottom: 0;
+  }
+
+  .signature {
+    font-size: 2.325rem !important;
+    font-style: italic !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    text-align: center !important;
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+    padding-top: 0.2rem;
+    opacity: 0.95;
   }
 
   .about-photo-col {
@@ -111,7 +127,12 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .body-copy {
-      font-size: 1.15rem;
+      font-size: 1.3rem;
+    }
+
+    .signature {
+      font-size: 1.15rem !important;
+      padding-top: 1rem;
     }
 
     .about-photo-col {

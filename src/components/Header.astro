@@ -5,15 +5,6 @@ interface Props {
   active?: 'home' | 'about' | 'menu' | 'cooking-classes' | 'catering' | 'contact';
 }
 const { active } = Astro.props as Props;
-
-const links = [
-  { id: 'home', label: 'Home', href: '/home' },
-  { id: 'about', label: 'About', href: '/about' },
-  { id: 'menu', label: 'Menu', href: '/menu' },
-  { id: 'cooking-classes', label: 'Cooking Classes', href: '/cooking-classes' },
-  { id: 'catering', label: 'Catering', href: '/catering' },
-  { id: 'contact', label: 'Contact', href: '/contact' },
-];
 ---
 
 <header class="site-header">
@@ -28,9 +19,31 @@ const links = [
       />
     </a>
     <nav class="primary" id="primaryNav">
-      {links.map((l) => (
-        <a href={l.href} class={active === l.id ? 'active' : ''}>{l.label}</a>
-      ))}
+      <a href="/home" class={active === 'home' ? 'active' : ''}>Home</a>
+      <a href="/about" class={active === 'about' ? 'active' : ''}>About</a>
+      <div class="nav-item">
+        <a href="/menu" class={active === 'menu' ? 'active' : ''}>
+          Menu
+        </a>
+        <button
+          type="button"
+          class="dropdown-toggle"
+          aria-expanded="false"
+          aria-label="Show menu options"
+        >
+          <svg class="chevron" viewBox="0 0 24 24" width="12" height="12">
+            <path d="M6 8l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <div class="dropdown-menu">
+          <a href="/menu">Full Menu</a>
+          <a href="/catering">Catering Menu</a>
+        </div>
+      </div>
+      <a href="/cooking-classes" class={active === 'cooking-classes' ? 'active' : ''}>Cooking Classes</a>
+      <a href="/catering" class={active === 'catering' ? 'active' : ''}>Catering</a>
+      <a href="/contact" class={active === 'contact' ? 'active' : ''}>Contact</a>
+      <a href="https://phoenicia-mediterranean.com/" target="_blank" rel="noopener">Online Store</a>
     </nav>
     <div class="header-actions">
       <a href="tel:3147649222" class="phone-link">
@@ -110,6 +123,90 @@ const links = [
 
   nav.primary a.active {
     color: var(--sand);
+  }
+
+  .nav-item {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px;
+    padding-bottom: 14px;
+    margin-bottom: -14px;
+  }
+
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    color: var(--sand);
+  }
+
+  .chevron {
+    transition: transform 0.2s ease;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background: var(--olive);
+    border: 1px solid var(--line-on-dark);
+    border-radius: 10px;
+    padding: 8px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 110;
+  }
+
+  .dropdown-menu a {
+    display: block;
+    font-size: 0.98rem;
+    font-weight: 600;
+    padding: 9px 14px;
+    border-radius: 6px;
+    white-space: nowrap;
+    color: var(--sand);
+    text-decoration: none;
+  }
+
+  .dropdown-menu a::after {
+    display: none;
+  }
+
+  .dropdown-menu a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .nav-item:hover .dropdown-menu,
+    .nav-item:focus-within .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .nav-item:hover .chevron,
+    .nav-item:focus-within .chevron {
+      transform: rotate(180deg);
+    }
+  }
+
+  .nav-item.open .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .nav-item.open .chevron {
+    transform: rotate(180deg);
   }
 
   .header-actions {
@@ -201,6 +298,37 @@ const links = [
     .nav-toggle {
       display: block;
     }
+    .nav-item {
+      flex-wrap: wrap;
+      width: 100%;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+    .dropdown-menu {
+      position: static;
+      flex-basis: 100%;
+      width: 100%;
+      max-height: 0;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      overflow: hidden;
+      padding: 0;
+      margin-top: 0;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+      transition: max-height 0.25s ease;
+    }
+    .nav-item.open .dropdown-menu {
+      max-height: 160px;
+      padding: 6px 0 0 4px;
+    }
+    .dropdown-menu a {
+      font-size: 1.05rem;
+      padding: 8px 0;
+      color: rgba(247, 238, 221, 0.85);
+    }
   }
 
   @media (max-width: 600px) {
@@ -228,6 +356,16 @@ const links = [
   const navToggle = document.getElementById('navToggle');
   const primaryNav = document.getElementById('primaryNav');
   const navToggleIcon = document.getElementById('navToggleIcon');
+  const dropdownItems = Array.from(document.querySelectorAll('.nav-item'));
+
+  const closeDropdown = (item) => {
+    item.classList.remove('open');
+    item.querySelector('.dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+  };
+
+  const closeAllDropdowns = () => {
+    dropdownItems.forEach(closeDropdown);
+  };
 
   navToggle?.addEventListener('click', () => {
     const isOpen = primaryNav?.classList.toggle('open');
@@ -237,6 +375,7 @@ const links = [
         ? '<use href="#icon-close"/>'
         : '<use href="#icon-menu"/>';
     }
+    closeAllDropdowns();
   });
 
   primaryNav?.querySelectorAll('a').forEach((a) => {
@@ -244,6 +383,30 @@ const links = [
       primaryNav.classList.remove('open');
       navToggle?.setAttribute('aria-expanded', 'false');
       if (navToggleIcon) navToggleIcon.innerHTML = '<use href="#icon-menu"/>';
+      closeAllDropdowns();
     });
+  });
+
+  dropdownItems.forEach((item) => {
+    const toggle = item.querySelector('.dropdown-toggle');
+    toggle?.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const isOpen = item.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(!!isOpen));
+      dropdownItems.forEach((other) => {
+        if (other !== item) closeDropdown(other);
+      });
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    dropdownItems.forEach((item) => {
+      if (!item.contains(e.target)) closeDropdown(item);
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAllDropdowns();
   });
 </script>
