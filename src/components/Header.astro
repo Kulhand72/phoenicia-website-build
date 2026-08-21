@@ -24,21 +24,23 @@ const { active } = Astro.props as Props;
       <a href="/menu" class={active === 'menu' ? 'active' : ''}>Menu</a>
       <a href="/cooking-classes" class={active === 'cooking-classes' ? 'active' : ''}>Cooking Classes</a>
       <div class="nav-item">
-        <a href="/catering" class={active === 'catering' ? 'active' : ''}>
-          Catering
-        </a>
         <button
           type="button"
-          class="dropdown-toggle"
+          class={'dropdown-toggle' + (active === 'catering' ? ' active' : '')}
           aria-expanded="false"
-          aria-label="Show catering options"
+          aria-haspopup="true"
         >
+          Catering
           <svg class="chevron" viewBox="0 0 24 24" width="12" height="12">
             <path d="M6 8l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
         <div class="dropdown-menu">
-          <a href="/catering">Catering Menu</a>
+          <a href="/catering/full-menu">Catering Full Menu</a>
+          <a href="/catering/overview">Overview &amp; Event Planning</a>
+          <a href="/catering/bulk-trays">Bulk Trays &amp; Appetizers</a>
+          <a href="/catering/meeting-boxes">Meeting Gourmet Boxes</a>
+          <a href="/catering/ready-to-eat-meals">Ready-to-Eat Meals</a>
         </div>
       </div>
       <a href="/contact" class={active === 'contact' ? 'active' : ''}>Contact</a>
@@ -137,12 +139,35 @@ const { active } = Astro.props as Props;
   .dropdown-toggle {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 4px;
     background: none;
     border: none;
-    padding: 4px;
+    padding: 4px 0;
     cursor: pointer;
+    position: relative;
     color: var(--sand);
+    font-family: inherit;
+    font-size: 1.18rem;
+    font-weight: 700;
+  }
+
+  .dropdown-toggle::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 2px;
+    background: var(--sand);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+
+  .dropdown-toggle:hover::after,
+  .dropdown-toggle.active::after,
+  .nav-item.open .dropdown-toggle::after {
+    transform: scaleX(1);
   }
 
   .chevron {
@@ -291,7 +316,8 @@ const { active } = Astro.props as Props;
     nav.primary.open {
       transform: translateX(0);
     }
-    nav.primary a {
+    nav.primary a,
+    .dropdown-toggle {
       font-size: 1.25rem;
     }
     .nav-toggle {
