@@ -13,29 +13,15 @@ function slugify(s: string) {
     <div class="wrap menu-page-head-row">
       <h1>Main Menu</h1>
       <div class="menu-page-head-cta">
-        <span class="menu-page-head-lead">For the catering full menu, click here:</span>
-        <a class="menu-page-head-btn" href={withBase('/catering/full-menu')}>Catering Full Menu</a>
+        <div class="menu-page-head-btn-row">
+          <a class="menu-page-head-btn" href={withBase('/catering/full-menu')}>Catering Full Menu</a>
+          <a class="vegan-menu-btn" href="#">Vegan Menu</a>
+        </div>
+        <span class="menu-page-head-lead">Click button for the Catering Full Menu</span>
       </div>
     </div>
     <div class="wrap">
       <p class="menu-page-head-note">Items marked <span class="v-letter">V</span> are Vegan options.</p>
-    </div>
-    <div class="wrap menu-page-head-vegan-row">
-      <a class="vegan-menu-btn" href="#">Vegan Menu</a>
-    </div>
-    <div class="wrap menu-cta">
-      <div class="menu-cta-text">
-        <p class="menu-cta-heading">Ready to start an order?</p>
-        <p class="menu-cta-line">
-          Give us a call
-          <a href="tel:3147649222" class="menu-cta-phone" aria-label="Call (314) 764-9222">
-            <svg viewBox="0 0 24 24"><use href="#icon-phone" /></svg>
-          </a>
-          or click the &ldquo;Start an Order&rdquo; button.
-        </p>
-        <p class="menu-cta-note">Pickup runs 20&ndash;30 minutes.</p>
-      </div>
-      <button type="button" class="menu-cta-btn" data-order-placeholder>Start an Order</button>
     </div>
   </section>
 
@@ -70,7 +56,23 @@ function slugify(s: string) {
   </div>
 
   <section class="menu-content" style="padding-top: 32px;">
-    <div class="wrap">
+    <div class="wrap menu-content-grid">
+      <aside class="menu-sidebar">
+        <div class="menu-cta">
+          <p class="menu-cta-heading">Ready to start an order?</p>
+          <p class="menu-cta-line">
+            Give us a call
+            <a href="tel:3147649222" class="menu-cta-phone" aria-label="Call (314) 764-9222">
+              <svg viewBox="0 0 24 24"><use href="#icon-phone" /></svg>
+            </a>
+            or click the &ldquo;Start an Order&rdquo; button.
+          </p>
+          <p class="menu-cta-note">Pickup runs 20&ndash;30 minutes.</p>
+          <button type="button" class="menu-cta-btn" data-order-placeholder>Start an Order</button>
+        </div>
+      </aside>
+
+      <div class="menu-main">
       <div id="menuPanels">
         {MENU.map((cat, i) => (
           <div class={'menu-panel' + (i === 0 ? ' active' : '')} id={'panel-' + cat.id} role="tabpanel">
@@ -118,6 +120,7 @@ function slugify(s: string) {
         </svg>
         <span class="menu-divider-line"></span>
       </div>
+      </div>
     </div>
   </section>
 </Layout>
@@ -154,6 +157,13 @@ function slugify(s: string) {
 
   .menu-page-head-cta {
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .menu-page-head-btn-row {
+    display: flex;
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
@@ -164,7 +174,7 @@ function slugify(s: string) {
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--ink-soft);
-    white-space: nowrap;
+    text-align: right;
   }
 
   .menu-page-head-note {
@@ -214,12 +224,6 @@ function slugify(s: string) {
     box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
   }
 
-  .menu-page-head-vegan-row {
-    display: flex;
-    justify-content: center;
-    padding: 22px 0 4px;
-  }
-
   .vegan-menu-btn {
     display: inline-flex;
     align-items: center;
@@ -228,12 +232,12 @@ function slugify(s: string) {
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     color: #fbeee9;
     background: linear-gradient(180deg, #3a8a3f 0%, #1b5e20 100%);
     border: 1px solid rgba(255, 255, 255, 0.28);
     border-radius: 999px;
-    padding: 14px 32px;
+    padding: 12px 24px;
     cursor: pointer;
     white-space: nowrap;
     text-decoration: none;
@@ -316,6 +320,22 @@ function slugify(s: string) {
 
   .menu-content {
     background: #ffffff;
+  }
+
+  .menu-content-grid {
+    display: grid;
+    grid-template-columns: 270px 1fr;
+    align-items: start;
+    gap: 36px;
+  }
+
+  .menu-sidebar {
+    position: sticky;
+    top: 210px;
+  }
+
+  .menu-main {
+    min-width: 0;
   }
 
   :global(body) {
@@ -475,27 +495,20 @@ function slugify(s: string) {
 
   .menu-cta {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 24px;
-    padding: 24px 0;
-    border-top: 1px solid var(--line);
-  }
-
-  .menu-cta-text {
-    display: flex;
     flex-direction: column;
-    gap: 8px;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--sand);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
   }
 
   .menu-cta-heading {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 2.1rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: #9e1b1e;
-    max-width: 32ch;
     margin: 0;
   }
 
@@ -505,10 +518,9 @@ function slugify(s: string) {
     flex-wrap: wrap;
     gap: 8px;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 400;
     color: #9e1b1e;
-    max-width: 60ch;
     margin: 0;
   }
 
@@ -538,7 +550,7 @@ function slugify(s: string) {
 
   .menu-cta-note {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: var(--ink);
     margin: 0;
@@ -548,6 +560,7 @@ function slugify(s: string) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     font-family: var(--font-body);
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -557,16 +570,26 @@ function slugify(s: string) {
     background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
     border: 1px solid rgba(255, 255, 255, 0.28);
     border-radius: 999px;
-    padding: 14px 30px;
+    padding: 14px 20px;
     cursor: pointer;
     white-space: nowrap;
     box-shadow: 0 6px 16px rgba(60, 10, 10, 0.28);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+    margin-top: 4px;
   }
 
   .menu-cta-btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
+  }
+
+  @media (max-width: 900px) {
+    .menu-content-grid {
+      grid-template-columns: 1fr;
+    }
+    .menu-sidebar {
+      position: static;
+    }
   }
 
   @media (max-width: 760px) {
@@ -576,9 +599,11 @@ function slugify(s: string) {
     .menu-item-text {
       max-width: 100%;
     }
-    .menu-cta {
-      flex-direction: column;
+    .menu-page-head-cta {
       align-items: flex-start;
+    }
+    .menu-page-head-lead {
+      text-align: left;
     }
   }
 </style>
