@@ -23,6 +23,20 @@ function slugify(s: string) {
     <div class="wrap menu-page-head-vegan-row">
       <a class="vegan-menu-btn" href="#">Vegan Menu</a>
     </div>
+    <div class="wrap menu-cta">
+      <div class="menu-cta-text">
+        <p class="menu-cta-heading">Ready to start an order?</p>
+        <p class="menu-cta-line">
+          Give us a call
+          <a href="tel:3147649222" class="menu-cta-phone" aria-label="Call (314) 764-9222">
+            <svg viewBox="0 0 24 24"><use href="#icon-phone" /></svg>
+          </a>
+          or click the &ldquo;Start an Order&rdquo; button.
+        </p>
+        <p class="menu-cta-note">Pickup runs 20&ndash;30 minutes.</p>
+      </div>
+      <button type="button" class="menu-cta-btn" data-order-placeholder>Start an Order</button>
+    </div>
   </section>
 
   <section class="menu-tabs-sticky">
@@ -103,21 +117,6 @@ function slugify(s: string) {
           <circle cx="28" cy="12" r="2.5" fill="currentColor" />
         </svg>
         <span class="menu-divider-line"></span>
-      </div>
-
-      <div class="menu-cta">
-        <div class="menu-cta-text">
-          <p class="menu-cta-heading">Ready to start an order?</p>
-          <p class="menu-cta-line">
-            Give us a call
-            <a href="tel:3147649222" class="menu-cta-phone" aria-label="Call (314) 764-9222">
-              <svg viewBox="0 0 24 24"><use href="#icon-phone" /></svg>
-            </a>
-            or click the &ldquo;Start an Order&rdquo; button.
-          </p>
-          <p class="menu-cta-note">Pickup runs 20&ndash;30 minutes.</p>
-        </div>
-        <button type="button" class="menu-cta-btn" data-order-placeholder>Start an Order</button>
       </div>
     </div>
   </section>
@@ -480,6 +479,9 @@ function slugify(s: string) {
     align-items: center;
     gap: 20px;
     flex-wrap: wrap;
+    margin-top: 24px;
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
   }
 
   .menu-cta-text {
