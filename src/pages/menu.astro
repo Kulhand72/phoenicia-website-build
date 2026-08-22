@@ -9,51 +9,53 @@ function slugify(s: string) {
 ---
 
 <Layout title="Menu" active="menu">
-  <section class="menu-page-head">
-    <div class="wrap menu-page-head-row">
-      <h1>Main Menu</h1>
-      <div class="menu-head-btn-group">
-        <a class="vegan-menu-btn" href={withBase('/menu/vegan')}>Vegan Menu</a>
-        <span class="menu-page-head-lead">Click for Vegan Menu items</span>
+  <div class="menu-sticky-head">
+    <section class="menu-page-head">
+      <div class="wrap menu-page-head-row">
+        <h1>Main Menu</h1>
+        <div class="menu-head-btn-group">
+          <a class="vegan-menu-btn" href={withBase('/menu/vegan')}>Vegan Menu</a>
+          <span class="menu-page-head-lead">Click for Vegan Menu items</span>
+        </div>
+        <div class="menu-head-btn-group menu-head-btn-group--end">
+          <a class="menu-page-head-btn" href={withBase('/catering/full-menu')}>Catering Full Menu</a>
+          <span class="menu-page-head-lead">Click button for the Catering Full Menu</span>
+        </div>
       </div>
-      <div class="menu-head-btn-group menu-head-btn-group--end">
-        <a class="menu-page-head-btn" href={withBase('/catering/full-menu')}>Catering Full Menu</a>
-        <span class="menu-page-head-lead">Click button for the Catering Full Menu</span>
+      <div class="wrap">
+        <p class="menu-page-head-note">Items marked <span class="v-letter">V</span> are Vegan options.</p>
       </div>
-    </div>
-    <div class="wrap">
-      <p class="menu-page-head-note">Items marked <span class="v-letter">V</span> are Vegan options.</p>
-    </div>
-  </section>
+    </section>
 
-  <section class="menu-tabs-sticky">
-    <div class="wrap">
-      <div class="menu-tabs" id="menuTabs" role="tablist">
-        {MENU.map((cat, i) => (
-          <button
-            type="button"
-            class={'menu-tab' + (i === 0 ? ' active' : '') + (cat.highlight ? ' menu-tab-highlight' : '')}
-            data-target={cat.id}
-            role="tab"
-            aria-selected={i === 0 ? 'true' : 'false'}
-          >
-            {cat.highlight && <span class="tab-star" aria-hidden="true">&#9733;</span>}
-            {cat.label}
-            {cat.highlight && <span class="tab-new-badge">New</span>}
-          </button>
-        ))}
+    <section class="menu-tabs-sticky">
+      <div class="wrap">
+        <div class="menu-tabs" id="menuTabs" role="tablist">
+          {MENU.map((cat, i) => (
+            <button
+              type="button"
+              class={'menu-tab' + (i === 0 ? ' active' : '') + (cat.highlight ? ' menu-tab-highlight' : '')}
+              data-target={cat.id}
+              role="tab"
+              aria-selected={i === 0 ? 'true' : 'false'}
+            >
+              {cat.highlight && <span class="tab-star" aria-hidden="true">&#9733;</span>}
+              {cat.label}
+              {cat.highlight && <span class="tab-new-badge">New</span>}
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <div class="menu-divider" aria-hidden="true">
-    <span class="menu-divider-line"></span>
-    <svg class="menu-divider-mark" viewBox="0 0 32 24">
-      <circle cx="4" cy="12" r="2.5" fill="currentColor" />
-      <path d="M16 2 L22 12 L16 22 L10 12 Z" fill="currentColor" />
-      <circle cx="28" cy="12" r="2.5" fill="currentColor" />
-    </svg>
-    <span class="menu-divider-line"></span>
+    <div class="menu-divider" aria-hidden="true">
+      <span class="menu-divider-line"></span>
+      <svg class="menu-divider-mark" viewBox="0 0 32 24">
+        <circle cx="4" cy="12" r="2.5" fill="currentColor" />
+        <path d="M16 2 L22 12 L16 22 L10 12 Z" fill="currentColor" />
+        <circle cx="28" cy="12" r="2.5" fill="currentColor" />
+      </svg>
+      <span class="menu-divider-line"></span>
+    </div>
   </div>
 
   <section class="menu-content" style="padding-top: 32px;">
@@ -135,6 +137,13 @@ function slugify(s: string) {
 
   p {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  .menu-sticky-head {
+    position: sticky;
+    top: 81px;
+    z-index: 95;
+    background: #ffffff;
   }
 
   .menu-page-head {
@@ -251,9 +260,6 @@ function slugify(s: string) {
   }
 
   .menu-tabs-sticky {
-    position: sticky;
-    top: 81px;
-    z-index: 90;
     background: #ffffff;
     padding: 18px 0;
   }
@@ -331,7 +337,7 @@ function slugify(s: string) {
 
   .menu-sidebar {
     position: sticky;
-    top: 210px;
+    top: 358px;
   }
 
   .menu-main {
@@ -408,10 +414,6 @@ function slugify(s: string) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0 36px;
-  }
-
-  #panel-sandwiches .menu-grid > .menu-item:last-child {
-    grid-column: 1 / -1;
   }
 
   .menu-item {
@@ -613,6 +615,9 @@ function slugify(s: string) {
       position: static;
       margin-top: 8px;
       white-space: normal;
+    }
+    .menu-sticky-head {
+      position: static;
     }
   }
 </style>
