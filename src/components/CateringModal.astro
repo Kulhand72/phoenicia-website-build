@@ -1,0 +1,388 @@
+---
+const ENDPOINT = 'https://formspree.io/f/mljrvajq';
+---
+
+<div class="catering-modal" id="cateringModal" aria-hidden="true">
+  <div class="catering-modal-backdrop" data-catering-close></div>
+  <div class="catering-modal-panel" role="dialog" aria-modal="true" aria-labelledby="cateringModalTitle">
+    <button type="button" class="catering-modal-close" data-catering-close aria-label="Close">
+      <svg viewBox="0 0 24 24"><use href="#icon-close" /></svg>
+    </button>
+
+    <form class="catering-form" id="cateringForm" data-endpoint={ENDPOINT} novalidate>
+      <h2 id="cateringModalTitle">Contact Us About Catering</h2>
+      <p class="catering-form-sub">Tell us about your event and we&rsquo;ll follow up to help you plan it.</p>
+
+      <div class="form-row two-up">
+        <div>
+          <label for="cateringFirstName">First Name</label>
+          <input type="text" id="cateringFirstName" name="firstName" required autocomplete="given-name" />
+        </div>
+        <div>
+          <label for="cateringLastName">Last Name</label>
+          <input type="text" id="cateringLastName" name="lastName" required autocomplete="family-name" />
+        </div>
+      </div>
+      <div class="form-row two-up">
+        <div>
+          <label for="cateringEmail">Email</label>
+          <input type="email" id="cateringEmail" name="email" required autocomplete="email" />
+        </div>
+        <div>
+          <label for="cateringPhone">Phone</label>
+          <input type="tel" id="cateringPhone" name="phone" required autocomplete="tel" />
+        </div>
+      </div>
+      <div class="form-row two-up">
+        <div>
+          <label for="cateringEventDate">Event Date</label>
+          <input type="date" id="cateringEventDate" name="eventDate" />
+        </div>
+        <div>
+          <label for="cateringGuests">Number of Guests</label>
+          <input type="number" id="cateringGuests" name="guests" min="1" placeholder="e.g. 50" />
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="cateringVenue">Venue Type</label>
+        <select id="cateringVenue" name="venueType">
+          <option value="Indoor">Indoor</option>
+          <option value="Outdoor">Outdoor</option>
+          <option value="Commercial">Commercial</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="cateringDetails">Tell us about your event</label>
+        <textarea
+          id="cateringDetails"
+          name="eventDetails"
+          rows="4"
+          placeholder="Event type, headcount, menu preferences, budget..."
+        ></textarea>
+      </div>
+
+      <button type="submit" class="catering-submit-btn" id="cateringSubmitBtn">Send Inquiry</button>
+      <p class="catering-form-note">
+        Prefer to talk it through? Call us at <a href="tel:3147649222">(314) 764-9222</a>.
+      </p>
+      <p class="catering-form-error" id="cateringError" hidden></p>
+    </form>
+
+    <div class="catering-success" id="cateringSuccess" hidden>
+      <svg viewBox="0 0 24 24" class="catering-success-icon" aria-hidden="true">
+        <use href="#icon-check-circle" />
+      </svg>
+      <h2>Thanks, we got your message!</h2>
+      <p>We&rsquo;ll follow up soon to help you plan your event.</p>
+      <button type="button" class="catering-done-btn" data-catering-close>Close</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .catering-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+
+  .catering-modal.open {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .catering-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 14, 8, 0.55);
+  }
+
+  .catering-modal-panel {
+    position: relative;
+    background: var(--paper);
+    border-radius: var(--radius);
+    padding: 36px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    transform: translateY(12px);
+    transition: transform 0.2s ease;
+  }
+
+  .catering-modal.open .catering-modal-panel {
+    transform: translateY(0);
+  }
+
+  .catering-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-soft);
+    padding: 4px;
+  }
+
+  .catering-modal-close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .catering-form h2 {
+    font-size: 1.5rem;
+    padding-right: 30px;
+    color: var(--ink);
+  }
+
+  .catering-form-sub {
+    margin-top: 6px;
+    margin-bottom: 22px;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .form-row.two-up {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .form-row.two-up > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  input,
+  select,
+  textarea {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    padding: 11px 13px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--sand);
+    color: var(--ink);
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: 2.5px solid var(--olive);
+    outline-offset: 1px;
+    border-color: var(--olive);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .catering-submit-btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 15px 20px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(60, 10, 10, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  }
+
+  .catering-submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
+  }
+
+  .catering-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+  }
+
+  .catering-form-note {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+
+  .catering-form-note a {
+    color: var(--clay);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .catering-form-note a:hover {
+    text-decoration: underline;
+  }
+
+  .catering-form-error {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    background: rgba(158, 27, 30, 0.08);
+    border: 1px solid rgba(158, 27, 30, 0.3);
+    color: #6b0c0f;
+    font-size: 0.88rem;
+  }
+
+  .catering-success {
+    text-align: center;
+    padding: 20px 8px 8px;
+  }
+
+  .catering-success-icon {
+    width: 44px;
+    height: 44px;
+    color: var(--olive);
+    margin-bottom: 12px;
+  }
+
+  .catering-success h2 {
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .catering-success p {
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+
+  .catering-done-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    color: var(--ink);
+    background: var(--sand);
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    padding: 12px 28px;
+    cursor: pointer;
+  }
+
+  .catering-done-btn:hover {
+    background: var(--sand-deep);
+  }
+
+  @media (max-width: 480px) {
+    .catering-modal-panel {
+      padding: 28px 20px;
+    }
+    .form-row.two-up {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<script>
+  import { submitFormToFormspree } from '../scripts/formSubmit';
+
+  const modal = document.getElementById('cateringModal');
+  const form = document.getElementById('cateringForm') as HTMLFormElement | null;
+  const successEl = document.getElementById('cateringSuccess');
+  const errorEl = document.getElementById('cateringError');
+  const submitBtn = document.getElementById('cateringSubmitBtn') as HTMLButtonElement | null;
+
+  function openModal() {
+    modal?.classList.add('open');
+    modal?.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeModal() {
+    modal?.classList.remove('open');
+    modal?.setAttribute('aria-hidden', 'true');
+  }
+
+  function resetModal() {
+    form?.reset();
+    if (form) form.hidden = false;
+    if (successEl) successEl.hidden = true;
+    if (errorEl) errorEl.hidden = true;
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Inquiry';
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('[data-open-catering-modal]')) {
+      resetModal();
+      openModal();
+    }
+    if (target.closest('[data-catering-close]')) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const endpoint = form.dataset.endpoint;
+    if (!endpoint) return;
+
+    if (errorEl) errorEl.hidden = true;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+    }
+
+    const result = await submitFormToFormspree(form, endpoint);
+
+    if (result.ok) {
+      form.hidden = true;
+      if (successEl) successEl.hidden = false;
+    } else {
+      if (errorEl) {
+        errorEl.textContent = result.error ?? 'Something went wrong. Please try again.';
+        errorEl.hidden = false;
+      }
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Inquiry';
+      }
+    }
+  });
+</script>

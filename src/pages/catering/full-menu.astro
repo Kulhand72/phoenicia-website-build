@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import CateringModal from '../../components/CateringModal.astro';
 import { withBase } from '../../lib/base';
 
 function slugify(s: string) {
@@ -231,10 +232,12 @@ const CATERING_MENU = [
       </div>
 
       <div class="catering-cta">
-        <button type="button" class="catering-cta-btn">Contact Us About Catering</button>
+        <button type="button" class="catering-cta-btn" data-open-catering-modal>Contact Us About Catering</button>
       </div>
     </div>
   </section>
+
+  <CateringModal />
 </Layout>
 
 <style>

@@ -54,6 +54,10 @@ export function removeItem(id: string) {
   writeCart(readCart().filter((i) => i.id !== id));
 }
 
+export function clearCart() {
+  writeCart([]);
+}
+
 export function getCount(): number {
   return readCart().reduce((sum, i) => sum + i.qty, 0);
 }

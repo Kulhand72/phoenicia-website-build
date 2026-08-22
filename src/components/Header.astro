@@ -1,5 +1,6 @@
 ---
 import headerLogo from '../assets/phoenicia-header-logo.png';
+import CheckoutModal from './CheckoutModal.astro';
 import { withBase } from '../lib/base';
 
 interface Props {
@@ -68,7 +69,7 @@ const { active } = Astro.props as Props;
           <div class="cart-lines" id="cartLines"></div>
           <div class="cart-footer" id="cartFooter" hidden>
             <div class="cart-total">Estimated total: <span id="cartTotal">$0.00</span></div>
-            <button type="button" class="cart-checkout-btn" data-order-placeholder>Checkout</button>
+            <button type="button" class="cart-checkout-btn" data-open-checkout-modal>Checkout</button>
           </div>
         </div>
       </div>
@@ -79,6 +80,8 @@ const { active } = Astro.props as Props;
     </div>
   </div>
 </header>
+
+<CheckoutModal />
 
 <style>
   .site-header {
@@ -700,6 +703,10 @@ const { active } = Astro.props as Props;
 
   onChange(renderCart);
   renderCart();
+
+  document.querySelector('[data-open-checkout-modal]')?.addEventListener('click', () => {
+    if (cartItem) closeDropdown(cartItem);
+  });
 
   cartToggle?.addEventListener('click', (e) => {
     e.preventDefault();

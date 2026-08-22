@@ -1,6 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { withBase } from '../../lib/base';
+
+const ENDPOINT = 'https://formspree.io/f/xvkpydkq';
 ---
 
 <Layout title="Class Inquiry" active="cooking-classes">
@@ -12,22 +14,65 @@ import { withBase } from '../../lib/base';
       </div>
       <h1>Request info about our classes.</h1>
       <p>
-        This is a visual preview &mdash; our online inquiry form is coming soon. In the meantime,
-        call us to ask about availability and reserve your spot.
+        Hands-on Mediterranean cooking classes are $55 per person, booked by request. Tell us
+        what you&rsquo;re hoping to learn and we&rsquo;ll follow up to confirm a date.
       </p>
     </div>
   </section>
 
   <section>
-    <div class="wrap center" style="max-width: 520px;">
-      <p class="body-copy">
-        Hands-on Mediterranean cooking classes are $55 per person, booked by request. Give us a
-        call and we&rsquo;ll help you find a date that works.
-      </p>
-      <a href="tel:3147649222" class="btn btn-primary" style="margin-top: 24px;">Call (314) 764-9222</a>
-      <p class="back-link">
-        <a href={withBase('/cooking-classes')}>&larr; Back to Cooking Classes</a>
-      </p>
+    <div class="wrap" style="max-width: 620px;">
+      <form class="inquire-form card" id="inquireForm" data-endpoint={ENDPOINT} novalidate>
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required autocomplete="name" />
+        </div>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email" />
+        </div>
+        <div class="form-row">
+          <label for="phone">Phone <span class="optional">(optional)</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" />
+        </div>
+        <div class="form-row">
+          <label for="preferredDate">Preferred Date/Time</label>
+          <input
+            type="text"
+            id="preferredDate"
+            name="preferredDate"
+            placeholder="e.g. a Saturday afternoon in October"
+          />
+        </div>
+        <div class="form-row">
+          <label for="participants">Number of Participants</label>
+          <input type="number" id="participants" name="participants" min="1" max="30" placeholder="e.g. 4" />
+        </div>
+        <div class="form-row">
+          <label for="interest">What are you interested in learning?</label>
+          <textarea
+            id="interest"
+            name="interest"
+            rows="4"
+            placeholder="Tell us about the group and what you're hoping to cook..."
+          ></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="inquireSubmitBtn">Send Inquiry</button>
+        <p class="form-note">
+          Prefer to talk it through? Call us at <a href="tel:3147649222">(314) 764-9222</a>.
+        </p>
+      </form>
+
+      <div class="inquire-success card" id="inquireSuccess" hidden>
+        <svg viewBox="0 0 24 24" class="success-icon" aria-hidden="true">
+          <use href="#icon-check-circle" />
+        </svg>
+        <h2>Thanks, we got your message!</h2>
+        <p>We&rsquo;ll follow up soon to help you find a date. Talk soon!</p>
+        <a href={withBase('/cooking-classes')} class="back-link-btn">&larr; Back to Cooking Classes</a>
+      </div>
+
+      <p class="form-error" id="inquireError" hidden></p>
     </div>
   </section>
 </Layout>
@@ -39,22 +84,184 @@ import { withBase } from '../../lib/base';
     flex: none;
   }
 
-  .body-copy {
-    font-size: 1rem;
+  .inquire-form {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .inquire-form[hidden] {
+    display: none;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .optional {
+    font-weight: 500;
+    color: var(--ink-soft);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  input,
+  textarea {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    padding: 11px 13px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: 2.5px solid var(--olive);
+    outline-offset: 1px;
+    border-color: var(--olive);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .btn-submit {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 14px 32px;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(60, 10, 10, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  }
+
+  .btn-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
+  }
+
+  .btn-submit:disabled {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+  }
+
+  .form-note {
+    font-size: 0.82rem;
     color: var(--ink-soft);
   }
 
-  .back-link {
-    margin-top: 22px;
+  .form-note a {
+    color: var(--clay);
+    font-weight: 600;
+    text-decoration: none;
   }
 
-  .back-link a {
-    font-weight: 600;
+  .form-note a:hover {
+    text-decoration: underline;
+  }
+
+  .inquire-success {
+    padding: 44px 32px;
+    text-align: center;
+  }
+
+  .success-icon {
+    width: 44px;
+    height: 44px;
+    color: var(--olive);
+    margin-bottom: 12px;
+  }
+
+  .inquire-success h2 {
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .inquire-success p {
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+  }
+
+  .back-link-btn {
+    font-weight: 700;
     color: var(--clay);
     text-decoration: none;
   }
 
-  .back-link a:hover {
+  .back-link-btn:hover {
     text-decoration: underline;
   }
+
+  .form-error {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    background: rgba(158, 27, 30, 0.08);
+    border: 1px solid rgba(158, 27, 30, 0.3);
+    color: #6b0c0f;
+    font-size: 0.9rem;
+  }
 </style>
+
+<script>
+  import { submitFormToFormspree } from '../../scripts/formSubmit';
+
+  const form = document.getElementById('inquireForm') as HTMLFormElement | null;
+  const successEl = document.getElementById('inquireSuccess');
+  const errorEl = document.getElementById('inquireError');
+  const submitBtn = document.getElementById('inquireSubmitBtn') as HTMLButtonElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const endpoint = form.dataset.endpoint;
+    if (!endpoint) return;
+
+    if (errorEl) errorEl.hidden = true;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+    }
+
+    const result = await submitFormToFormspree(form, endpoint);
+
+    if (result.ok) {
+      form.hidden = true;
+      if (successEl) successEl.hidden = false;
+    } else {
+      if (errorEl) {
+        errorEl.textContent = result.error ?? 'Something went wrong. Please try again.';
+        errorEl.hidden = false;
+      }
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Inquiry';
+      }
+    }
+  });
+</script>

@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import CateringModal from '../../components/CateringModal.astro';
 ---
 
 <Layout title="Catering & Event Planning" active="catering">
@@ -24,10 +25,12 @@ import Layout from '../../layouts/Layout.astro';
       </p>
 
       <div class="overview-cta">
-        <button type="button" class="pill-btn">Contact Us</button>
+        <button type="button" class="pill-btn" data-open-catering-modal>Contact Us</button>
       </div>
     </div>
   </section>
+
+  <CateringModal />
 </Layout>
 
 <style>
