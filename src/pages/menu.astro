@@ -12,11 +12,11 @@ function slugify(s: string) {
   <section class="menu-page-head">
     <div class="wrap menu-page-head-row">
       <h1>Main Menu</h1>
-      <div class="menu-page-head-vegan-col">
+      <div class="menu-head-btn-group">
         <a class="vegan-menu-btn" href={withBase('/menu/vegan')}>Vegan Menu</a>
-        <span class="menu-page-head-lead menu-page-head-lead--vegan">Click for Vegan Menu items</span>
+        <span class="menu-page-head-lead">Click for Vegan Menu items</span>
       </div>
-      <div class="menu-page-head-cta">
+      <div class="menu-head-btn-group menu-head-btn-group--end">
         <a class="menu-page-head-btn" href={withBase('/catering/full-menu')}>Catering Full Menu</a>
         <span class="menu-page-head-lead">Click button for the Catering Full Menu</span>
       </div>
@@ -155,36 +155,25 @@ function slugify(s: string) {
     color: var(--ink);
   }
 
-  .menu-page-head-vegan-col {
+  .menu-head-btn-group {
     position: relative;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .menu-page-head-lead--vegan {
-    left: 0;
-    right: 0;
-    width: 100%;
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  .menu-page-head-cta {
-    position: relative;
-    display: flex;
+  .menu-head-btn-group--end {
     justify-self: end;
   }
 
   .menu-page-head-lead {
     position: absolute;
     top: 100%;
-    right: 0;
     margin-top: 8px;
     font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--ink-soft);
-    text-align: right;
     white-space: nowrap;
   }
 
@@ -616,21 +605,14 @@ function slugify(s: string) {
       text-align: center;
       gap: 14px;
     }
-    .menu-page-head-cta {
-      flex-direction: column;
-      align-items: center;
+    .menu-head-btn-group,
+    .menu-head-btn-group--end {
       justify-self: center;
     }
     .menu-page-head-lead {
       position: static;
       margin-top: 8px;
-      text-align: center;
       white-space: normal;
-      transform: none;
-    }
-    .menu-page-head-vegan-col {
-      flex-direction: column;
-      align-items: center;
     }
   }
 </style>
