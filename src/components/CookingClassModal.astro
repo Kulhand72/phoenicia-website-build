@@ -1,0 +1,366 @@
+---
+const ENDPOINT = 'https://formspree.io/f/xvkpydkq';
+---
+
+<div class="cookingclass-modal" id="cookingClassModal" aria-hidden="true">
+  <div class="cookingclass-modal-backdrop" data-cookingclass-close></div>
+  <div class="cookingclass-modal-panel" role="dialog" aria-modal="true" aria-labelledby="cookingClassModalTitle">
+    <button type="button" class="cookingclass-modal-close" data-cookingclass-close aria-label="Close">
+      <svg viewBox="0 0 24 24"><use href="#icon-close" /></svg>
+    </button>
+
+    <form class="cookingclass-form" id="cookingClassForm" data-endpoint={ENDPOINT} novalidate>
+      <h2 id="cookingClassModalTitle">Request Info About Our Classes</h2>
+      <p class="cookingclass-form-sub">
+        Hands-on Mediterranean cooking classes are $55 per person, booked by request. Tell us
+        what you&rsquo;re hoping to learn and we&rsquo;ll follow up to confirm a date.
+      </p>
+
+      <div class="form-row">
+        <label for="cookingClassName">Name</label>
+        <input type="text" id="cookingClassName" name="name" required autocomplete="name" />
+      </div>
+      <div class="form-row">
+        <label for="cookingClassEmail">Email</label>
+        <input type="email" id="cookingClassEmail" name="email" required autocomplete="email" />
+      </div>
+      <div class="form-row">
+        <label for="cookingClassPhone">Phone <span class="optional">(optional)</span></label>
+        <input type="tel" id="cookingClassPhone" name="phone" autocomplete="tel" />
+      </div>
+      <div class="form-row">
+        <label for="cookingClassDate">Preferred Date/Time</label>
+        <input
+          type="text"
+          id="cookingClassDate"
+          name="preferredDate"
+          placeholder="e.g. a Saturday afternoon in October"
+        />
+      </div>
+      <div class="form-row">
+        <label for="cookingClassParticipants">Number of Participants</label>
+        <input type="number" id="cookingClassParticipants" name="participants" min="1" max="30" placeholder="e.g. 4" />
+      </div>
+      <div class="form-row">
+        <label for="cookingClassInterest">What are you interested in learning?</label>
+        <textarea
+          id="cookingClassInterest"
+          name="interest"
+          rows="4"
+          placeholder="Tell us about the group and what you're hoping to cook..."
+        ></textarea>
+      </div>
+
+      <button type="submit" class="cookingclass-submit-btn" id="cookingClassSubmitBtn">Send Inquiry</button>
+      <p class="cookingclass-form-note">
+        Prefer to talk it through? Call us at <a href="tel:3147649222">(314) 764-9222</a>.
+      </p>
+      <p class="cookingclass-form-error" id="cookingClassError" hidden></p>
+    </form>
+
+    <div class="cookingclass-success" id="cookingClassSuccess" hidden>
+      <svg viewBox="0 0 24 24" class="cookingclass-success-icon" aria-hidden="true">
+        <use href="#icon-check-circle" />
+      </svg>
+      <h2>Thanks, we got your message!</h2>
+      <p>We&rsquo;ll follow up soon to help you find a date. Talk soon!</p>
+      <button type="button" class="cookingclass-done-btn" data-cookingclass-close>Close</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookingclass-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+
+  .cookingclass-modal.open {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .cookingclass-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 14, 8, 0.55);
+  }
+
+  .cookingclass-modal-panel {
+    position: relative;
+    background: var(--paper);
+    border-radius: var(--radius);
+    padding: 36px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    transform: translateY(12px);
+    transition: transform 0.2s ease;
+  }
+
+  .cookingclass-modal.open .cookingclass-modal-panel {
+    transform: translateY(0);
+  }
+
+  .cookingclass-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ink-soft);
+    padding: 4px;
+  }
+
+  .cookingclass-modal-close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cookingclass-form h2 {
+    font-size: 1.5rem;
+    padding-right: 30px;
+    color: var(--ink);
+  }
+
+  .cookingclass-form-sub {
+    margin-top: 6px;
+    margin-bottom: 22px;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .optional {
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+
+  input,
+  textarea {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    padding: 11px 13px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--sand);
+    color: var(--ink);
+  }
+
+  input:focus,
+  textarea:focus {
+    outline: 2.5px solid var(--olive);
+    outline-offset: 1px;
+    border-color: var(--olive);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .cookingclass-submit-btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #9e1b1e 0%, #6b0c0f 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 15px 20px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(60, 10, 10, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  }
+
+  .cookingclass-submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
+  }
+
+  .cookingclass-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+  }
+
+  .cookingclass-form-note {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+
+  .cookingclass-form-note a {
+    color: var(--clay);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .cookingclass-form-note a:hover {
+    text-decoration: underline;
+  }
+
+  .cookingclass-form-error {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    background: rgba(158, 27, 30, 0.08);
+    border: 1px solid rgba(158, 27, 30, 0.3);
+    color: #6b0c0f;
+    font-size: 0.88rem;
+  }
+
+  .cookingclass-success {
+    text-align: center;
+    padding: 20px 8px 8px;
+  }
+
+  .cookingclass-success-icon {
+    width: 44px;
+    height: 44px;
+    color: var(--olive);
+    margin-bottom: 12px;
+  }
+
+  .cookingclass-success h2 {
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .cookingclass-success p {
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+
+  .cookingclass-done-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    color: var(--ink);
+    background: var(--sand);
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    padding: 12px 28px;
+    cursor: pointer;
+  }
+
+  .cookingclass-done-btn:hover {
+    background: var(--sand-deep);
+  }
+
+  @media (max-width: 480px) {
+    .cookingclass-modal-panel {
+      padding: 28px 20px;
+    }
+  }
+</style>
+
+<script>
+  import { submitFormToFormspree } from '../scripts/formSubmit';
+
+  const modal = document.getElementById('cookingClassModal');
+  const form = document.getElementById('cookingClassForm') as HTMLFormElement | null;
+  const successEl = document.getElementById('cookingClassSuccess');
+  const errorEl = document.getElementById('cookingClassError');
+  const submitBtn = document.getElementById('cookingClassSubmitBtn') as HTMLButtonElement | null;
+
+  function openModal() {
+    modal?.classList.add('open');
+    modal?.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeModal() {
+    modal?.classList.remove('open');
+    modal?.setAttribute('aria-hidden', 'true');
+  }
+
+  function resetModal() {
+    form?.reset();
+    if (form) form.hidden = false;
+    if (successEl) successEl.hidden = true;
+    if (errorEl) errorEl.hidden = true;
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Inquiry';
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('[data-open-cookingclass-modal]')) {
+      resetModal();
+      openModal();
+    }
+    if (target.closest('[data-cookingclass-close]')) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+
+    const endpoint = form.dataset.endpoint;
+    if (!endpoint) return;
+
+    if (errorEl) errorEl.hidden = true;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+    }
+
+    const result = await submitFormToFormspree(form, endpoint);
+
+    if (result.ok) {
+      form.hidden = true;
+      if (successEl) successEl.hidden = false;
+    } else {
+      if (errorEl) {
+        errorEl.textContent = result.error ?? 'Something went wrong. Please try again.';
+        errorEl.hidden = false;
+      }
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Inquiry';
+      }
+    }
+  });
+</script>

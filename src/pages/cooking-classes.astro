@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import CookingClassModal from '../components/CookingClassModal.astro';
 import cookingBg from '../assets/cooking-classes-bg.jpg';
-import { withBase } from '../lib/base';
 ---
 
 <Layout title="Cooking Classes" active="cooking-classes" fitViewport>
@@ -26,9 +26,11 @@ import { withBase } from '../lib/base';
         us what you are looking to learn and let us help you on your journey. Thank you!
       </p>
 
-      <a href={withBase('/cooking-classes/inquire')} class="inquire-btn">Inquire Now</a>
+      <button type="button" class="inquire-btn" data-open-cookingclass-modal>Inquire Now</button>
     </div>
   </section>
+
+  <CookingClassModal />
 </Layout>
 
 <style>
