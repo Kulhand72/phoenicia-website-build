@@ -160,19 +160,22 @@ function slugify(s: string) {
   }
 
   .menu-page-head-cta {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
     justify-self: end;
   }
 
   .menu-page-head-lead {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
     font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--ink-soft);
     text-align: right;
+    white-space: nowrap;
   }
 
   .menu-page-head-note {
@@ -604,11 +607,15 @@ function slugify(s: string) {
       gap: 14px;
     }
     .menu-page-head-cta {
+      flex-direction: column;
       align-items: center;
       justify-self: center;
     }
     .menu-page-head-lead {
+      position: static;
+      margin-top: 8px;
       text-align: center;
+      white-space: normal;
     }
   }
 </style>
