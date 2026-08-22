@@ -10,13 +10,13 @@ function slugify(s: string) {
 
 <Layout title="Menu" active="menu">
   <section class="menu-page-head">
+    <div class="wrap menu-page-head-vegan-row">
+      <a class="vegan-menu-btn" href="#">Vegan Menu</a>
+    </div>
     <div class="wrap menu-page-head-row">
       <h1>Main Menu</h1>
       <div class="menu-page-head-cta">
-        <div class="menu-page-head-btn-row">
-          <a class="menu-page-head-btn" href={withBase('/catering/full-menu')}>Catering Full Menu</a>
-          <a class="vegan-menu-btn" href="#">Vegan Menu</a>
-        </div>
+        <a class="menu-page-head-btn" href={withBase('/catering/full-menu')}>Catering Full Menu</a>
         <span class="menu-page-head-lead">Click button for the Catering Full Menu</span>
       </div>
     </div>
@@ -141,6 +141,12 @@ function slugify(s: string) {
     background: #ffffff;
   }
 
+  .menu-page-head-vegan-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
   .menu-page-head-row {
     display: flex;
     justify-content: space-between;
@@ -160,13 +166,6 @@ function slugify(s: string) {
     flex-direction: column;
     align-items: flex-end;
     gap: 8px;
-  }
-
-  .menu-page-head-btn-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
   }
 
   .menu-page-head-lead {
@@ -498,7 +497,7 @@ function slugify(s: string) {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
-    background: var(--sand);
+    background: #EAF0E2;
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 22px;
