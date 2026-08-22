@@ -20,6 +20,9 @@ function slugify(s: string) {
     <div class="wrap">
       <p class="menu-page-head-note">Items marked <span class="v-letter">V</span> are Vegan options.</p>
     </div>
+    <div class="wrap menu-page-head-vegan-row">
+      <a class="vegan-menu-btn" href="#">Vegan Menu</a>
+    </div>
   </section>
 
   <section class="menu-tabs-sticky">
@@ -146,7 +149,7 @@ function slugify(s: string) {
 
   .menu-page-head h1 {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 2.73rem;
+    font-size: 3.35rem;
     color: var(--ink);
   }
 
@@ -210,6 +213,38 @@ function slugify(s: string) {
   .menu-page-head-btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 8px 20px rgba(60, 10, 10, 0.36);
+  }
+
+  .menu-page-head-vegan-row {
+    display: flex;
+    justify-content: center;
+    padding: 22px 0 4px;
+  }
+
+  .vegan-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: #fbeee9;
+    background: linear-gradient(180deg, #3a8a3f 0%, #1b5e20 100%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 999px;
+    padding: 14px 32px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+    box-shadow: 0 6px 16px rgba(20, 60, 20, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .vegan-menu-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(20, 60, 20, 0.36);
   }
 
   .menu-tabs-sticky {
