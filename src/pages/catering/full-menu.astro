@@ -112,8 +112,8 @@ const CATERING_MENU = [
     <div class="wrap menu-page-head-row">
       <h1>Catering Full Menu</h1>
       <div class="menu-page-head-cta">
-        <span class="menu-page-head-lead">For the main menu, click here:</span>
         <a class="menu-page-head-btn" href={withBase('/menu/full')}>Main Menu</a>
+        <span class="menu-page-head-lead">Click the button for Main Menu</span>
       </div>
     </div>
   </section>
@@ -251,7 +251,7 @@ const CATERING_MENU = [
   }
 
   .menu-page-head {
-    padding: 32px 0 0;
+    padding: 32px 0 30px;
     background: #ffffff;
   }
 
@@ -270,17 +270,20 @@ const CATERING_MENU = [
   }
 
   .menu-page-head-cta {
+    position: relative;
     display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
   }
 
   .menu-page-head-lead {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
     font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--ink-soft);
+    text-align: right;
     white-space: nowrap;
   }
 
@@ -549,6 +552,21 @@ const CATERING_MENU = [
     }
     .menu-item-text {
       max-width: 100%;
+    }
+    .menu-page-head-row {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .menu-page-head-cta {
+      flex-direction: column;
+      align-items: center;
+    }
+    .menu-page-head-lead {
+      position: static;
+      margin-top: 8px;
+      text-align: center;
+      white-space: normal;
     }
   }
 
